@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui" 
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+mc:Ignorable="d" Width="800" Height="700"
+x:Class="VKR2025.About"
+Title="Описание этапов"
+CanResize="False"
+WindowStartupLocation="CenterScreen">
+<Grid ShowGridLines="False">
+	<Grid.RowDefinitions>
+		<RowDefinition Height="15"/>
+		<RowDefinition Height="10"/>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition Height="10"/>
+		<RowDefinition Height="15"/>
+	</Grid.RowDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="15"/>
+		<ColumnDefinition Width="7"/>
+		<ColumnDefinition/>
+		<ColumnDefinition/>
+		<ColumnDefinition Width="7"/>
+		<ColumnDefinition Width="15"/>
+	</Grid.ColumnDefinitions>
+
+	<TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Text="Краткое описание тестирования" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold"/>
+	<TextBlock Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="Тахистоскопический тест&#x0a;Быстрая демонстрация двух рядов по 4 цифры в каждом на очень короткое время (доли секунды), задача - быстро воспринять и запомнить показанное.&#x0a;&#x0a;
+    Тест Миллера&#x0a;  Тест на воспроизведение постоянно увеличивающейся последовательности цифр, проверяющий кратковременную память и внимание.&#x0a;&#x0a;
+    Тест Бернштейна «Узнавание фигур»&#x0a;Проверяет зрительную память на фигуры - участнику показывают набор фигур, затем просят вспомнить или узнать их среди других.&#x0a;&#x0a;
+	Методика 10 слов Лурия&#x0a;Тест на вербальную память: участнику последовательно предъявляют 10 слов, которые нужно запомнить и воспроизвести спустя некоторое время.&#x0a;&#x0a;
+	Тест «Запомни и расставь»&#x0a;Участнику показывают таблицы с точками на короткое время. После показа нужно отметить в другой таблице те ячейки, где были точки, проверяя  способность запоминать расположение элементов." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+	<Button Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Bottom" Content="Вернуться назад" HorizontalContentAlignment="Center" FontSize="20" Margin="0 0 0 12" Background="#0067a5" Foreground="White"/>
+	<Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="11" Background="#0067a5"/>
+	<Border Grid.Column="5" Grid.Row="0" Grid.RowSpan="11" Background="#0067a5"/>
+	<Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" Background="#0067a5"/>
+	<Border Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="4" Background="#0067a5"/>
+</Grid>
+</Window>

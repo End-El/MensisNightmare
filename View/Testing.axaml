@@ -1,0 +1,238 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:VKR2025.ViewModel"
+        x:DataType="vm:TestingViewModel"
+        mc:Ignorable="d" Width="800" Height="565"
+        x:Class="VKR2025.View.Testing"
+        Title="Тестирование"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="15"/>
+			<RowDefinition Height="10"/>
+			<RowDefinition/>
+			<RowDefinition Height="10"/>
+			<RowDefinition Height="15"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="15"/>
+			<ColumnDefinition Width="7"/>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="7"/>
+			<ColumnDefinition Width="15"/>
+		</Grid.ColumnDefinitions>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage1" IsVisible="{Binding Stage1Visible}">
+			<!--Контейнер 1 этапа-->
+			<Grid ShowGridLines="false">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="A" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="60 0 0 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="В" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 45 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="Г" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="45 0 0 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="А" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 60 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="Д" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="60 0 0 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="Б" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 45 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="Ц" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="45 0 0 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="Е" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 60 0" Width="90" BorderThickness="2"/>
+			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage2" IsVisible="{Binding Stage2Visible}">
+			<!--Контейнер 2 этапа-->
+			<Grid ShowGridLines="False">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="1" Text="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="140" IsVisible="True"/>
+				<TextBlock Grid.Column="0" Grid.Row="4" Text="Введено цифр 3 / 10" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="37" VerticalAlignment="Top" IsVisible="True"/>
+				<TextBox Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="80" HorizontalContentAlignment="Center" Margin="20 10" IsEnabled="True"/>
+			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage3" IsVisible="{Binding Stage3Visible}">
+			<!--Контейнер 3 этапа-->
+			<Grid ShowGridLines="false">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 -20 0 0" Text="Запомните фигуры, изображенные ниже." FontSize="29"/>
+				<Image Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="4" Source="C:\Sharp\VKR2025\Assets\BernStain1.jpg" Height="300" Margin="0 0 0 0"/>
+			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage4" IsVisible="{Binding Stage4Visible}">
+			<!--Контейнер 4 этапа-->
+			<Grid ShowGridLines="false">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Прослушайте запись" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 100 0" FontSize="25"/>
+				<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="100 0 0 0" Background="Transparent">
+					<Button.Styles>
+						<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+							<Setter Property="Background" Value="Transparent"/>
+						</Style>
+						<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+							<Setter Property="Background" Value="Transparent"/>
+						</Style>
+					</Button.Styles>
+					<Image Source="C:\Sharp\VKR2025\Assets\speaker-filled-audio-tool.png"/>
+				</Button>
+				<TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="Запишите все запомнившиеся слова, затем нажмите &quot;Далее&quot;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="24"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="25" TextWrapping="Wrap" MaxLines="3" BorderThickness="3"/>
+				<Button Grid.Row="8" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Center" Content="Далее" HorizontalContentAlignment="Center" FontSize="20" Background="#0067a5" Foreground="White"/>
+			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage5" IsVisible="{Binding Stage5Visible}">
+			<!--Контейнер 5 этапа-->
+			<Grid ShowGridLines="False">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="Расставьте точки в таблице по памяти." FontSize="23"/>
+				<Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" Margin="120,0" BorderBrush="Black" BorderThickness="4" CornerRadius="0">
+					<Grid Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="4">
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Border BorderBrush="Gray" BorderThickness="0,0,0,2" Grid.Row="0" Grid.ColumnSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="0,0,0,2" Grid.Row="1" Grid.ColumnSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="0,0,0,2" Grid.Row="2" Grid.ColumnSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="0,0,0,2" Grid.Row="3" Grid.ColumnSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="2,0,0,0" Grid.Column="1" Grid.RowSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="2,0,0,0" Grid.Column="2" Grid.RowSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="2,0,0,0" Grid.Column="3" Grid.RowSpan="5"/>
+						<Border BorderBrush="Gray" BorderThickness="2,0,0,0" Grid.Column="4" Grid.RowSpan="5"/>
+						<Ellipse Grid.Row="1" Grid.Column="1" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="1" Grid.Column="4" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="4" Grid.Column="3" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="0" Grid.Column="2" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="0" Grid.Column="0" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="1" Grid.Column="0" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="2" Grid.Column="1" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Ellipse Grid.Row="2" Grid.Column="2" Width="30" Height="30" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Grid>
+				</Border>
+				<Button Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Center" Content="Проверить" HorizontalContentAlignment="Center" FontSize="20" Background="#0067a5" Foreground="White" Margin="0 10 0 0" IsVisible="True"/>
+			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Beginnig" IsVisible="false">
+			<!--Контейнер инструкции-->
+			<Grid ShowGridLines="false">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Этап 1 из 5.&#x0a;Тахистоскопический тест" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="Эксперимент состоит из двух частей.&#x0a;В каждой части вы увидите серию из 20 кратковременных показов символов.&#x0a;Перед каждым показом на экране появится слово &quot;ВНИМАНИЕ!&quot; - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.&#x0a;&#x0a;Первая часть (полный отчет):&#x0a;Ваша задача - воспроизвести все буквы, которые вы успели увидеть, в любом порядке.&#x0a;&#x0a;Вторая часть (частичный отчет):&#x0a;Вместе с буквами появится указатель (стрелка вверх или вниз), показывающий, какую строчку (верхнюю или нижнюю) нужно воспроизвести.&#x0a;&#x0a;Пожалуйста, старайтесь отвечать как можно точнее.&#x0a;Нажмите &quot;Начать&quot;, когда будете готовы." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Bottom" Content="Начать" HorizontalContentAlignment="Center" FontSize="20" Margin="0 0 0 12" Background="#0067a5" Foreground="White"/>
+			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="EndTest" IsVisible="false">
+			<!--Контейнер конца тестирования-->
+			<Grid ShowGridLines="false">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Тестирование завершено!" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center" FontWeight="Bold"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="Вы успешно завершили тестирование.&#x0a;Нажмите &quot;Завершить&quot; для просмотра результатов." FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+				<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="360" Height="50" VerticalAlignment="Top" Content="Завершить" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Background="#0067a5" Foreground="White"/>
+			</Grid>
+		</ContentControl>
+
+		<!-- Обрамляющие бордеры -->
+		<Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="12" Background="#0067a5"/>
+		<Border Grid.Column="5" Grid.Row="0" Grid.RowSpan="12" Background="#0067a5"/>
+		<Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" Background="#0067a5"/>
+		<Border Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="4" Background="#0067a5"/>
+	</Grid>
+	
+</Window>
