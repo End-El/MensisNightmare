@@ -2,6 +2,8 @@
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:vm="clr-namespace:VKR2025.ViewModel"
+x:DataType="vm:TestingViewModel"
 mc:Ignorable="d" Width="800" Height="700"
 x:Class="VKR2025.Results"
 Title="Результаты тестирования"
@@ -55,7 +57,7 @@ WindowStartupLocation="CenterScreen">
 
 	<TextBox Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="3" FontSize="16" TextWrapping="Wrap" BorderThickness="3" Margin="5"/>
 	
-	<Button Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="350" Height="40" VerticalAlignment="Bottom" Content="Вернуться назад" HorizontalContentAlignment="Center" FontSize="21" Margin="0 0 0 7" Background="#0067a5" Foreground="White"/>
+	<Button Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="350" Height="40" VerticalAlignment="Bottom" Content="Вернуться назад" HorizontalContentAlignment="Center" FontSize="21" Margin="0 0 0 7" Background="#0067a5" Foreground="White" Command="{Binding CloseResults}"/>
 	<Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="15" Background="#0067a5"/>
 	<Border Grid.Column="5" Grid.Row="0" Grid.RowSpan="15" Background="#0067a5"/>
 	<Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" Background="#0067a5"/>

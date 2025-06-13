@@ -10,6 +10,10 @@ using System.Windows.Input;
 using System.Runtime.CompilerServices;
 using Avalonia.Data;
 using Avalonia.Controls.ApplicationLifetimes;
+using VKR2025.View;
+using Tmds.DBus.Protocol;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia;
 
 namespace VKR2025.ViewModel
 {
@@ -86,23 +90,85 @@ namespace VKR2025.ViewModel
         }
 
         public ICommand OpenRegistryCommand { get; }
-        public Action? CloseWindowAction { get; set; }
+        public ICommand OpenTestingCommand { get; }
+        public ICommand OpenAboutCommand { get; }
+        public ICommand OpenResultsCommand { get; }
+        public Action? CloseMainWindowAction { get; set; }
+        public Action? CloseAboutAction { get; set; }
+        public Action? CloseResultsAction { get; set; }
+        public Action? CloseRegistryAction { get; set; }
 
         public TestingViewModel()
         {
             OpenRegistryCommand = new RelayCommand(OpenRegistry);
+            OpenTestingCommand = new RelayCommand(OpenTesting);
+            OpenAboutCommand = new RelayCommand(OpenAbout);
+            OpenResultsCommand = new RelayCommand(OpenResults);
         }
 
-        private void OpenRegistry()
+        public void OpenRegistry()
         {
             var registryWindow = new Registry();
             registryWindow.Show();
-            CloseWindowAction?.Invoke();
+            CloseMainWindowAction?.Invoke();
         }
-    
 
-    // Добавьте класс RelayCommand, если его еще нет
-    public class RelayCommand : ICommand
+        public Func<Window?>? GetOwnerWindow { get; set; }
+        public void OpenTesting()
+        {
+            if (Age > 0 && !string.IsNullOrWhiteSpace(Name))
+            {
+                var testWindow = new Testing();
+                testWindow.Show();
+                CloseMainWindowAction?.Invoke();
+            }
+            else
+            {
+                var ownerWindow = GetOwnerWindow?.Invoke();
+                var box = MessageBoxManager.GetMessageBoxStandard("Ошибка", "Пожалуйста, заполните все поля.", ButtonEnum.Ok);
+                box.ShowWindowDialogAsync(ownerWindow); //  показываем на текущем окне
+                return;
+            }
+        }
+
+        public void OpenAbout()
+        {
+            var about = new About();
+            about.Show();
+            //CloseWindowAction.Invoke();
+        }
+        public void OpenResults()
+        {
+            var res = new Results();
+            res.Show();
+        }
+
+        public void CloseAbout()
+        {
+            CloseAboutAction.Invoke();
+        }
+
+        public void CloseResults()
+        {
+            CloseResultsAction.Invoke();
+        }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; OnPropertyChanged("Name"); }
+        }
+
+        private int _age;
+        public int Age
+        {
+            get { return _age; }
+            set { _age = value; OnPropertyChanged("Age"); }
+        }
+
+        // Добавьте класс RelayCommand, если его еще нет
+        public class RelayCommand : ICommand
     {
         private readonly Action _execute;
 

@@ -10,7 +10,7 @@ namespace VKR2025
             InitializeComponent();
             var viewModel = new TestingViewModel();
             // Устанавливаем, что делать, когда VM скажет "закрывай окно"
-            viewModel.CloseWindowAction = () => this.Close();
+            viewModel.CloseMainWindowAction = () => this.Close();
             DataContext = viewModel;
         }
     }
