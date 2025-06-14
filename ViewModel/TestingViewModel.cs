@@ -140,6 +140,7 @@ namespace VKR2025.ViewModel
         public ICommand OpenAboutCommand { get; }
         public ICommand OpenResultsCommand { get; }
         public ICommand GoTestingCommand { get; }
+        public ICommand ConfirmCommand { get; }
         public Action? CloseMainWindowAction { get; set; }
         public Action? CloseAboutAction { get; set; }
         public Action? CloseResultsAction { get; set; }
@@ -147,13 +148,25 @@ namespace VKR2025.ViewModel
 
         public TestingViewModel()
         {
+            GenerateInitialCollections();
             OpenRegistryCommand = new RelayCommand(OpenRegistry);
             OpenTestingCommand = new RelayCommand(OpenTesting);
             OpenAboutCommand = new RelayCommand(OpenAbout);
             OpenResultsCommand = new RelayCommand(OpenResults);
             GoTestingCommand = new RelayCommand(GoTesting);
+            ConfirmCommand = new RelayCommand(Confirm);
         }
 
+        private void GenerateInitialCollections()
+        {
+            Stimuli.Clear();
+            for (int i = 0; i < 8; i++)
+            {
+                Stimuli.Add('А'); // или любой другой фиксированный символ
+                Responses.Add("");
+            }
+                
+        }
         private void SetStageVisibility(bool s1, bool s2, bool s3, bool s4, bool s5, bool s6, bool s7, bool s8)
         {
             Stage1Visible = s1;
@@ -173,14 +186,156 @@ namespace VKR2025.ViewModel
             CloseMainWindowAction?.Invoke();
         }
 
-        //public ICommand StartTestCommand => new RelayCommand(GoTesting);
+        private TaskCompletionSource<bool>? _trialCompletionSource;
+        public void Confirm()
+        {
+            _trialCompletionSource?.TrySetResult(true);
+        }
+
+        public ObservableCollection<char> Stimuli { get; } = new();
+        public ObservableCollection<string> Responses { get; } = new();
+
+        private bool _stimuliVisible; //отображение полей для предъявления стимулов
+        public bool StimuliVisible
+        {
+            get => _stimuliVisible;
+            set { _stimuliVisible = value; OnPropertyChanged(); }
+        }
+
+        private bool _inputVisible; //отображение полей для ввода
+        public bool InputVisible
+        {
+            get => _inputVisible;
+            set { _inputVisible = value; OnPropertyChanged(); }
+        }
+
+        private string _warningText; //вспомогательный текст
+        public string WarningText
+        {
+            get => _warningText;
+            set { _warningText = value; OnPropertyChanged(); }
+        }
+        
+        private int _warningSize; //вспомогательный текст
+        public int WarningSize
+        {
+            get => _warningSize;
+            set { _warningSize = value; OnPropertyChanged(); }
+        }
+
+        private void GenerateStimuli() //генерация стимулов
+        {
+            //Stimuli.Clear();
+            var rand = new Random();
+
+            for (int i = 0; i < 8; i++)
+            {
+                Stimuli[i] = ((char)rand.Next('А', 'Я' + 1));
+            }
+        }
+
+        private void ResetResponses() //Обнуляем введеные буквы для следующей итерации
+        {
+            //Responses.Clear();
+            for (int i = 0; i < 8; i++)
+            {
+                Responses[i] = "";
+            }
+        }
+
         public async void GoTesting()
         {
             InstructionVisible = false;
-            WarningVisible = true;
+            for (int i = 0; i < 20; i++)
+            {
+                // Показ "ВНИМАНИЕ!" перед стимулом
+                WarningSize = 80;
+                WarningText = "ВНИМАНИЕ!";
+                WarningVisible = true;
+
+                await Task.Delay(1000);
+
+                // Переход к этапу стимулов
+                SetStageVisibility(
+                    s1: true,  // Включаем Stage1
+                    s2: false, s3: false, s4: false, s5: false, //отключаем остальные этапы
+                    s6: false, // Instruction
+                    s7: false, // Warning
+                    s8: false  // Ending
+                );
+
+                //await RunTrialAsync(); // ⬅ вставляем циклы сюда
+                InputVisible = false;
+                StimuliVisible = false;
+
+                await Task.Delay(1000);
+
+                GenerateStimuli();
+                ResetResponses();
+
+                StimuliVisible = true;
+                await Task.Delay(500);
+                StimuliVisible = false;
+
+                InputVisible = true;
+                _trialCompletionSource = new TaskCompletionSource<bool>();
+                await _trialCompletionSource.Task;
+
+                // Подсчёт
+                int correct = 0;
+                for (int j = 0; j < 8; j++)
+                {
+                    if (Responses[j].Length == 1 &&
+                        char.ToUpperInvariant(Responses[j][0]) == Stimuli[j])
+                    {
+                        correct++;
+                    }
+                }
+
+                InputVisible = false;
+
+                // Показ результата
+                WarningSize = 60;
+                WarningText = $"Верных ответов: {correct}/8";
+                WarningVisible = true;
+
+                await Task.Delay(1500); // Показ на 1.5 сек
+
+                WarningVisible = false;
+                WarningSize = 80;
+                WarningText = "ВНИМАНИЕ!"; // Сброс текста
+
+                await Task.Delay(300); // небольшая пауза перед следующей итерацией
+            }
+
+            // Всё! Показ финальной надписи
+            SetStageVisibility(
+                s1: false,
+                s2: false, s3: false, s4: false, s5: false,
+                s6: false,
+                s7: true,
+                s8: true  // EndingVisible
+            );
+
+        }
+
+        public async Task RunTrialAsync()
+        {
+            InputVisible = false;
+            StimuliVisible = false;
+
             await Task.Delay(1000);
-            WarningVisible = false;
-            Stage1Visible = true;
+
+            GenerateStimuli();
+            ResetResponses();
+
+            StimuliVisible = true;
+            await Task.Delay(250);
+            StimuliVisible = false;
+
+            InputVisible = true;
+
+            // Ждём пользовательский ввод вручную
         }
 
         public Func<Window?>? GetOwnerWindow { get; set; }

@@ -25,7 +25,8 @@
 			<ColumnDefinition Width="15"/>
 		</Grid.ColumnDefinitions>
 
-		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage1" IsVisible="{Binding Stage1Visible}">
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage1" IsVisible="True">
+			<!--{Binding Stage1Visible}-->
 			<!--Контейнер 1 этапа-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
@@ -41,14 +42,24 @@
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="A" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="60 0 0 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="В" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 45 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="Г" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="45 0 0 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="А" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 60 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="Д" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="60 0 0 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="Б" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 45 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="Ц" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="45 0 0 0" Width="90" BorderThickness="2"/>
-				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="Е" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 60 0" Width="90" BorderThickness="2"/>
+				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Stimuli[0]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="60 0 0 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Stimuli[1]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 45 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Stimuli[2]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="45 0 0 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Stimuli[3]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 60 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Stimuli[4]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="60 0 0 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Stimuli[5]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 45 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Stimuli[6]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="45 0 0 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Stimuli[7]}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0 0 60 0" Width="90" BorderThickness="2" IsReadOnly="True" IsVisible="{Binding StimuliVisible}"/>
+
+				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Responses[0], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left"  MaxLength="1" Margin="60 0 0 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Responses[1], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" MaxLength="1" Margin="0 0 45 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Responses[2], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" MaxLength="1" Margin="45 0 0 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Text="{Binding Responses[3], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" MaxLength="1" Margin="0 0 60 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Responses[4], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" MaxLength="1" Margin="60 0 0 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Responses[5], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" MaxLength="1" Margin="0 0 45 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Responses[6], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Left" MaxLength="1" Margin="45 0 0 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<TextBox Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Text="{Binding Responses[7], Mode=TwoWay}" FontSize="94" HorizontalContentAlignment="Center" HorizontalAlignment="Right" MaxLength="1" Margin="0 0 60 0" Width="90" BorderThickness="2" IsVisible="{Binding InputVisible}"/>
+				<Button Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Content="Проверить" HorizontalContentAlignment="Center" FontSize="18" Background="#0067a5" Foreground="White" IsVisible="{Binding InputVisible}" Command="{Binding ConfirmCommand}"/>
 			</Grid>
 		</ContentControl>
 
@@ -230,7 +241,7 @@
 
 		<ContentControl Grid.Column="2" Grid.Row="2" Name="Warning" IsVisible="{Binding WarningVisible}">
 			<!--Контейнер с вспомогательной	инфой-->
-			<TextBlock Text="Внимание!" FontSize="80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding WarningText}" FontSize="{Binding WarningSize}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</ContentControl>
 
 		<!-- Обрамляющие бордеры -->
