@@ -16,6 +16,7 @@ using MsBox.Avalonia.Enums;
 using MsBox.Avalonia;
 using System.Data.SqlTypes;
 using System.Collections.ObjectModel;
+using VKR2025.Model;
 
 namespace VKR2025.ViewModel
 {
@@ -141,6 +142,7 @@ namespace VKR2025.ViewModel
         public ICommand OpenResultsCommand { get; }
         public ICommand GoTestingCommand { get; }
         public ICommand ConfirmCommand { get; }
+        public ICommand NextCommand { get; }
         public Action? CloseMainWindowAction { get; set; }
         public Action? CloseAboutAction { get; set; }
         public Action? CloseResultsAction { get; set; }
@@ -153,8 +155,9 @@ namespace VKR2025.ViewModel
             OpenTestingCommand = new RelayCommand(OpenTesting);
             OpenAboutCommand = new RelayCommand(OpenAbout);
             OpenResultsCommand = new RelayCommand(OpenResults);
-            GoTestingCommand = new RelayCommand(GoTesting);
+            GoTestingCommand = new RelayCommand(GoStage1);
             ConfirmCommand = new RelayCommand(Confirm);
+            NextCommand = new RelayCommand(Next);
         }
 
         private void GenerateInitialCollections()
@@ -165,7 +168,7 @@ namespace VKR2025.ViewModel
                 Stimuli.Add('А'); // или любой другой фиксированный символ
                 Responses.Add("");
             }
-                
+
         }
         private void SetStageVisibility(bool s1, bool s2, bool s3, bool s4, bool s5, bool s6, bool s7, bool s8)
         {
@@ -215,12 +218,61 @@ namespace VKR2025.ViewModel
             get => _warningText;
             set { _warningText = value; OnPropertyChanged(); }
         }
-        
+
         private int _warningSize; //вспомогательный текст
         public int WarningSize
         {
             get => _warningSize;
             set { _warningSize = value; OnPropertyChanged(); }
+        }
+
+        private string _endTitle;
+        public string EndTitle
+        {
+            get => _endTitle;
+            set { _endTitle = value; OnPropertyChanged(); }
+        }
+
+        private string _endText;
+        public string EndText
+        {
+            get => _endText;
+            set { _endText = value; OnPropertyChanged(); }
+        }
+
+        private string _endButton;
+        public string EndButton
+        {
+            get => _endButton;
+            set { _endButton = value; OnPropertyChanged(); }
+        }
+
+        public void Next()
+        {
+            var parts = EndText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var word = parts[3].ToLower();
+            switch (word)
+            {
+                case "первый":
+                    //переход ко 2
+                break;
+
+                case "второй":
+                    //переход к 3
+                break;
+
+                case "третий":
+                    //переход к 4    
+                break;
+
+                case "четвертый":
+                    //переход к 5
+                break;
+
+                case "тестирование":
+                    //показ результатов
+                break;
+            }
         }
 
         private void GenerateStimuli() //генерация стимулов
@@ -243,10 +295,10 @@ namespace VKR2025.ViewModel
             }
         }
 
-        public async void GoTesting()
+        public async void GoStage1()
         {
             InstructionVisible = false;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 4; i++)
             {
                 // Показ "ВНИМАНИЕ!" перед стимулом
                 WarningSize = 80;
@@ -282,6 +334,7 @@ namespace VKR2025.ViewModel
                 await _trialCompletionSource.Task;
 
                 // Подсчёт
+                ResultModel resultModel = new ResultModel();
                 int correct = 0;
                 for (int j = 0; j < 8; j++)
                 {
@@ -291,6 +344,7 @@ namespace VKR2025.ViewModel
                         correct++;
                     }
                 }
+                resultModel.AddScore(correct);
 
                 InputVisible = false;
 
@@ -309,11 +363,14 @@ namespace VKR2025.ViewModel
             }
 
             // Всё! Показ финальной надписи
+            EndTitle = "Этап завершен";
+            EndText = "Вы успешно завершили первый этап.\nНажмите \"Далее\" для перехода на следующий.";
+            EndButton = "Далее";
             SetStageVisibility(
                 s1: false,
                 s2: false, s3: false, s4: false, s5: false,
                 s6: false,
-                s7: true,
+                s7: false,
                 s8: true  // EndingVisible
             );
 
@@ -404,29 +461,29 @@ namespace VKR2025.ViewModel
 
         // Добавьте класс RelayCommand, если его еще нет
         public class RelayCommand : ICommand
-    {
-        private readonly Action _execute;
-
-        public RelayCommand(Action execute)
         {
-            _execute = execute;
+            private readonly Action _execute;
+
+            public RelayCommand(Action execute)
+            {
+                _execute = execute;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public bool CanExecute(object parameter) => true;
+
+            public void Execute(object parameter)
+            {
+                _execute();
+            }
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter) => true;
-
-        public void Execute(object parameter)
-        {
-            _execute();
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-}
+} //Эксперимент состоит из двух частей.&#x0a;В каждой части вы увидите серию из 20 кратковременных показов символов.&#x0a;Перед каждым показом на экране появится слово &quot;ВНИМАНИЕ!&quot; - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.&#x0a;&#x0a;Ваша задача - воспроизвести все буквы, которые вы успели увидеть, в любом порядке.&#x0a;&#x0a;Пожалуйста, старайтесь отвечать как можно точнее.&#x0a;Нажмите &quot;Начать&quot;, когда будете готовы.
 
