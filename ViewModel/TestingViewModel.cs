@@ -14,11 +14,15 @@ using VKR2025.View;
 using Tmds.DBus.Protocol;
 using MsBox.Avalonia.Enums;
 using MsBox.Avalonia;
+using System.Data.SqlTypes;
+using System.Collections.ObjectModel;
 
 namespace VKR2025.ViewModel
 {
     public class TestingViewModel : INotifyPropertyChanged
     {
+        private Testing? _testingWindow;
+
         private bool _stage1Visible;
         public bool Stage1Visible
         {
@@ -89,10 +93,53 @@ namespace VKR2025.ViewModel
             }
         }
 
+        private bool _instructionVisible;
+        public bool InstructionVisible
+        {
+            get { return _instructionVisible; }
+            set
+            {
+                if (_instructionVisible != value) // Исправлено условие с = на !=
+                {
+                    _instructionVisible = value;
+                    OnPropertyChanged(nameof(InstructionVisible));
+                }
+            }
+        }
+
+        private bool _warningVisible;
+        public bool WarningVisible
+        {
+            get { return _warningVisible; }
+            set
+            {
+                if (_warningVisible != value) // Исправлено условие с = на !=
+                {
+                    _warningVisible = value;
+                    OnPropertyChanged(nameof(WarningVisible));
+                }
+            }
+        }
+
+        private bool _endingVisible;
+        public bool EndingVisible
+        {
+            get { return _endingVisible; }
+            set
+            {
+                if (_endingVisible != value) // Исправлено условие с = на !=
+                {
+                    _endingVisible = value;
+                    OnPropertyChanged(nameof(EndingVisible));
+                }
+            }
+        }
+
         public ICommand OpenRegistryCommand { get; }
         public ICommand OpenTestingCommand { get; }
         public ICommand OpenAboutCommand { get; }
         public ICommand OpenResultsCommand { get; }
+        public ICommand GoTestingCommand { get; }
         public Action? CloseMainWindowAction { get; set; }
         public Action? CloseAboutAction { get; set; }
         public Action? CloseResultsAction { get; set; }
@@ -104,6 +151,19 @@ namespace VKR2025.ViewModel
             OpenTestingCommand = new RelayCommand(OpenTesting);
             OpenAboutCommand = new RelayCommand(OpenAbout);
             OpenResultsCommand = new RelayCommand(OpenResults);
+            GoTestingCommand = new RelayCommand(GoTesting);
+        }
+
+        private void SetStageVisibility(bool s1, bool s2, bool s3, bool s4, bool s5, bool s6, bool s7, bool s8)
+        {
+            Stage1Visible = s1;
+            Stage2Visible = s2;
+            Stage3Visible = s3;
+            Stage4Visible = s4;
+            Stage5Visible = s5;
+            InstructionVisible = s6;
+            WarningVisible = s7;
+            EndingVisible = s8;
         }
 
         public void OpenRegistry()
@@ -113,14 +173,26 @@ namespace VKR2025.ViewModel
             CloseMainWindowAction?.Invoke();
         }
 
+        //public ICommand StartTestCommand => new RelayCommand(GoTesting);
+        public async void GoTesting()
+        {
+            InstructionVisible = false;
+            WarningVisible = true;
+            await Task.Delay(1000);
+            WarningVisible = false;
+            Stage1Visible = true;
+        }
+
         public Func<Window?>? GetOwnerWindow { get; set; }
         public void OpenTesting()
         {
             if (Age > 0 && !string.IsNullOrWhiteSpace(Name))
             {
-                var testWindow = new Testing();
-                testWindow.Show();
-                CloseMainWindowAction?.Invoke();
+                _testingWindow = new Testing();
+                _testingWindow.DataContext = this;
+                _testingWindow?.Show();
+                CloseRegistryAction?.Invoke();
+                SetStageVisibility(false, false, false, false, false, true, false, false);
             }
             else
             {
@@ -167,6 +239,14 @@ namespace VKR2025.ViewModel
             set { _age = value; OnPropertyChanged("Age"); }
         }
 
+        private void Do1Stage()
+        {
+            for (int i = 0; i < 19; i++)
+            {
+
+            }
+        }
+
         // Добавьте класс RelayCommand, если его еще нет
         public class RelayCommand : ICommand
     {
@@ -194,3 +274,4 @@ namespace VKR2025.ViewModel
         }
     }
 }
+

@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using System.Linq;
 using VKR2025.ViewModel;
 
 namespace VKR2025;

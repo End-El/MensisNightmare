@@ -184,7 +184,7 @@
 			</Grid>
 		</ContentControl>
 
-		<ContentControl Grid.Column="2" Grid.Row="2" Name="Beginnig" IsVisible="false">
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Beginnig" IsVisible="{Binding InstructionVisible}">
 			<!--Контейнер инструкции-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
@@ -202,11 +202,11 @@
 				</Grid.ColumnDefinitions>
 				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Этап 1 из 5.&#x0a;Тахистоскопический тест" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
 				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="Эксперимент состоит из двух частей.&#x0a;В каждой части вы увидите серию из 20 кратковременных показов символов.&#x0a;Перед каждым показом на экране появится слово &quot;ВНИМАНИЕ!&quot; - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.&#x0a;&#x0a;Первая часть (полный отчет):&#x0a;Ваша задача - воспроизвести все буквы, которые вы успели увидеть, в любом порядке.&#x0a;&#x0a;Вторая часть (частичный отчет):&#x0a;Вместе с буквами появится указатель (стрелка вверх или вниз), показывающий, какую строчку (верхнюю или нижнюю) нужно воспроизвести.&#x0a;&#x0a;Пожалуйста, старайтесь отвечать как можно точнее.&#x0a;Нажмите &quot;Начать&quot;, когда будете готовы." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-				<Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Bottom" Content="Начать" HorizontalContentAlignment="Center" FontSize="20" Margin="0 0 0 12" Background="#0067a5" Foreground="White"/>
+				<Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Bottom" Content="Начать" HorizontalContentAlignment="Center" FontSize="20" Margin="0 0 0 12" Background="#0067a5" Foreground="White" Command="{Binding GoTestingCommand}"/>
 			</Grid>
 		</ContentControl>
 
-		<ContentControl Grid.Column="2" Grid.Row="2" Name="EndTest" IsVisible="false">
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="EndTest" IsVisible="{Binding EndingVisible}">
 			<!--Контейнер конца тестирования-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
@@ -226,6 +226,11 @@
 				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="Вы успешно завершили тестирование.&#x0a;Нажмите &quot;Завершить&quot; для просмотра результатов." FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
 				<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="360" Height="50" VerticalAlignment="Top" Content="Завершить" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Background="#0067a5" Foreground="White"/>
 			</Grid>
+		</ContentControl>
+
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Warning" IsVisible="{Binding WarningVisible}">
+			<!--Контейнер с вспомогательной	инфой-->
+			<TextBlock Text="Внимание!" FontSize="80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</ContentControl>
 
 		<!-- Обрамляющие бордеры -->
