@@ -11,7 +11,11 @@ namespace VKR2025.Model
         public int Stage1Result { get; set; } = 0; //Тахистоскоп
         public void AddScore(int score)
         {
-            Stage1Result += score;
+            Stage1Result += score; 
+        }
+        public void AverageScore()
+        {
+            Stage1Result = (int)Math.Ceiling(Stage1Result / 160.0 * 100); //переводим в среднюю иточность, в процентах
         }
 
         public int Stage2Result { get; set; } = 0; //Лурия

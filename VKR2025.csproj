@@ -69,6 +69,10 @@
 	  <AvaloniaResource Include="Assets\43.JPG" />
 	  <AvaloniaResource Include="Assets\44.JPG" />
 	  <AvaloniaResource Include="Assets\BernStain1.jpg" />
+	  <AvaloniaResource Include="Assets\mark.JPG" />
+	  <Content Include="Assets\marks3.JPG" />
+	  <Content Include="Assets\marks5.JPG" />
+	  <Content Include="Assets\marks7.JPG" />
 	</ItemGroup>
   <ItemGroup>
     <Content Include="Assets\00.JPG">
@@ -158,6 +162,9 @@
     <Content Include="Assets\speaker-filled-audio-tool.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  <Content Include="Assets\marks9.JPG">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>
