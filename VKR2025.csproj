@@ -7,12 +7,148 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
+    <None Remove="Assets\00.JPG" />
+    <None Remove="Assets\01.JPG" />
+    <None Remove="Assets\02.JPG" />
+    <None Remove="Assets\03.JPG" />
+    <None Remove="Assets\04.JPG" />
+    <None Remove="Assets\10.JPG" />
+    <None Remove="Assets\11.JPG" />
+    <None Remove="Assets\12.JPG" />
+    <None Remove="Assets\13.JPG" />
+    <None Remove="Assets\14.JPG" />
+    <None Remove="Assets\20.JPG" />
+    <None Remove="Assets\21.JPG" />
+    <None Remove="Assets\22.JPG" />
+    <None Remove="Assets\23.JPG" />
+    <None Remove="Assets\24.JPG" />
+    <None Remove="Assets\30.JPG" />
+    <None Remove="Assets\31.JPG" />
+    <None Remove="Assets\32.JPG" />
+    <None Remove="Assets\33.JPG" />
+    <None Remove="Assets\34.JPG" />
+    <None Remove="Assets\40.JPG" />
+    <None Remove="Assets\41.JPG" />
+    <None Remove="Assets\42.JPG" />
+    <None Remove="Assets\43.JPG" />
+    <None Remove="Assets\44.JPG" />
+    <None Remove="Assets\BernStain1.jpg" />
     <None Remove="Assets\FRENDZONA_Sekret.mp3" />
     <None Remove="Assets\Luria.mp3" />
     <None Remove="Assets\speaker-filled-audio-tool.png" />
-  </ItemGroup>
+  </ItemGroup>-->
+	<!--<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>-->
+	<ItemGroup>
+	  <AvaloniaResource Include="Assets\**" />
+	  <AvaloniaResource Include="Assets\00.JPG" />
+	  <AvaloniaResource Include="Assets\01.JPG" />
+	  <AvaloniaResource Include="Assets\02.JPG" />
+	  <AvaloniaResource Include="Assets\03.JPG" />
+	  <AvaloniaResource Include="Assets\04.JPG" />
+	  <AvaloniaResource Include="Assets\10.JPG" />
+	  <AvaloniaResource Include="Assets\11.JPG" />
+	  <AvaloniaResource Include="Assets\12.JPG" />
+	  <AvaloniaResource Include="Assets\13.JPG" />
+	  <AvaloniaResource Include="Assets\14.JPG" />
+	  <AvaloniaResource Include="Assets\20.JPG" />
+	  <AvaloniaResource Include="Assets\21.JPG" />
+	  <AvaloniaResource Include="Assets\22.JPG" />
+	  <AvaloniaResource Include="Assets\23.JPG" />
+	  <AvaloniaResource Include="Assets\24.JPG" />
+	  <AvaloniaResource Include="Assets\30.JPG" />
+	  <AvaloniaResource Include="Assets\31.JPG" />
+	  <AvaloniaResource Include="Assets\32.JPG" />
+	  <AvaloniaResource Include="Assets\33.JPG" />
+	  <AvaloniaResource Include="Assets\34.JPG" />
+	  <AvaloniaResource Include="Assets\40.JPG" />
+	  <AvaloniaResource Include="Assets\41.JPG" />
+	  <AvaloniaResource Include="Assets\42.JPG" />
+	  <AvaloniaResource Include="Assets\43.JPG" />
+	  <AvaloniaResource Include="Assets\44.JPG" />
+	  <AvaloniaResource Include="Assets\BernStain1.jpg" />
+	</ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\00.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\01.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\02.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\03.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\04.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\10.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\11.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\12.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\13.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\14.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\20.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\21.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\22.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\23.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\24.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\30.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\31.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\32.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\33.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\34.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\40.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\41.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\42.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\43.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\44.JPG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\BernStain1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\FRENDZONA_Sekret.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

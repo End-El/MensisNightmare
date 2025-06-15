@@ -84,7 +84,7 @@
 			</Grid>
 		</ContentControl>
 
-		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage4" IsVisible="{Binding Stage4Visible}">
+		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage4" IsVisible="true">   <!--{Binding Stage4Visible}-->
 			<!--Контейнер 4 этапа, Бернштейн-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
@@ -100,8 +100,63 @@
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 -20 0 0" Text="Запомните фигуры, изображенные ниже." FontSize="29"/>
-				<Image Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="4" Source="C:\Sharp\VKR2025\Assets\BernStain1.jpg" Height="300" Margin="0 0 0 0"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 -20 0 0" Text="{Binding BernsteinText}" TextWrapping="Wrap" TextAlignment="Center" FontSize="29"/>
+				<Image Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="4" Source="avares://VKR2025/Assets/BernStain1.jpg" Height="300" Margin="0 0 0 0" IsVisible="{Binding BernsteinImage}"/>
+				<Grid ShowGridLines="false" Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2" Margin="120 0" IsVisible="{Binding BernsteinMatrix}">
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<Border BorderBrush="Gray" BorderThickness="0,2,0,0" Grid.Row="0" Grid.ColumnSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="0,0,0,1" Grid.Row="1" Grid.ColumnSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="0,0,0,1" Grid.Row="2" Grid.ColumnSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="0,0,0,1" Grid.Row="3" Grid.ColumnSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="0,0,0,2" Grid.Row="4" Grid.ColumnSpan="5" />
+
+					<Border BorderBrush="Gray" BorderThickness="2,0,0,0" Grid.Column="0" Grid.RowSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="1,0,0,0" Grid.Column="1" Grid.RowSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="1,0,0,0" Grid.Column="2" Grid.RowSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="1,0,0,0" Grid.Column="3" Grid.RowSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="1,0,0,0" Grid.Column="4" Grid.RowSpan="5" />
+					<Border BorderBrush="Gray" BorderThickness="0,0,2,0" Grid.Column="5" Grid.RowSpan="5" />
+					<ToggleButton Grid.Column="0" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/00.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="0" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/01.JPG" Stretch="Uniform" /></ToggleButton>
+					<ToggleButton Grid.Column="0" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/02.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="0" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/03.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="0" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/04.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="1" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/10.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="1" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/11.JPG" Stretch="Uniform" /></ToggleButton>
+					<ToggleButton Grid.Column="1" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/12.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="1" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/13.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="1" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/14.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/20.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/21.JPG" Stretch="Uniform" /></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/22.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/23.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/24.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="3" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/30.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="3" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/31.JPG" Stretch="Uniform" /></ToggleButton>
+					<ToggleButton Grid.Column="3" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/32.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="3" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/33.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="3" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/34.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="4" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/40.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="4" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/41.JPG" Stretch="Uniform" /></ToggleButton>
+					<ToggleButton Grid.Column="4" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/42.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="4" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/43.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="4" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/44.JPG" Stretch="Uniform"/></ToggleButton>
+				</Grid>
+				<Button Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Content="Далее" HorizontalContentAlignment="Center" FontSize="18" Background="#0067a5" Foreground="White" IsVisible="{Binding InputVisible}" Command="{Binding ConfirmCommand}"/>
 			</Grid>
 		</ContentControl>
 

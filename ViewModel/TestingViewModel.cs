@@ -352,6 +352,27 @@ namespace VKR2025.ViewModel
             }
         }
 
+        private bool _bernsteinImage;
+        public bool BernsteinImage
+        {
+            get => _bernsteinImage;
+            set { _bernsteinImage = value; OnPropertyChanged(); }
+        }
+
+        private string _bernsteinText;
+        public string BernsteinText 
+        {
+            get => _bernsteinText;
+            set { _bernsteinText = value; OnPropertyChanged(); }
+        }
+
+        private bool _bernsteinMatrix;
+        public bool BernsteinMatrix
+        {
+            get => _bernsteinMatrix;
+            set { _bernsteinMatrix = value; OnPropertyChanged(); }
+        }
+
         public void Next()
         {
             switch (testingStage)
@@ -381,8 +402,8 @@ namespace VKR2025.ViewModel
                     break;
 
                 case "четвертый_тест":
-                    //переход к 4
-                break;
+                    GoStage4();
+                    break;
 
                 case "пятый_начало":
                     //инструкция к 5
@@ -579,7 +600,7 @@ namespace VKR2025.ViewModel
         private void Stage2Begin()
         {
             InfoTitle = "Этап 2 из 5.\nТест на запоминание 10 слов Александра Лурии";
-            InfoText = "Эксперимент состоит из четырёх частей.\nВ каждой части вам нужно будет прослушать аудиозапись,а затем написать в появившемся окне все слова, которые вы успели запомнить. " +
+            InfoText = "Эксперимент состоит из четырёх частей.\n\nВ каждой части вам нужно будет прослушать аудиозапись,а затем написать в появившемся окне все слова, которые вы успели запомнить. " +
                 "Слова нужно записывать через пробел, без запятых и других знаков разделения.\n\nПожалуйста, старайтесь отвечать как можно точнее.\nНажмите \"Начать\", когда будете готовы.";
             SetStageVisibility(false, false, false, false, false, true, false, false);
             testingStage = "второй_тест";
@@ -652,7 +673,7 @@ namespace VKR2025.ViewModel
         private void Stage3Begin()
         {
             InfoTitle = "Этап 3 из 5.\nТест на диапазон цифр";
-            InfoText = "Эксперимент состоит из запоминания и воспроизведения числовой последовательности.\nВам будет посимвольно представлена числовая последовательность." +
+            InfoText = "Эксперимент состоит из запоминания и воспроизведения числовой последовательности.\n\nВам будет посимвольно представлена числовая последовательность." +
                 "Задача состоит в корректном воспроизведении заданной последовательности, используя поле в нижней части формы.\n\nЭтап завершится либо при совершении ошибки при воспроизведении последовательности, " +
                 "либо при корректной записи последовательности длиной в 10 символов.\nНажмите \"Начать\", когда будете готовы.";
             SetStageVisibility(false, false, false, false, false, true, false, false);
@@ -715,16 +736,6 @@ namespace VKR2025.ViewModel
             ShowStep = false;
         }
 
-        private void Stage4Begin()
-        {
-            InfoTitle = "Этап 4 из 5.\nТест Бернштейна на запоминание фигур";
-            InfoText = "Эксперимент состоит из запоминания и воспроизведения числовой последовательности.\nВам будет посимвольно представлена числовая последовательность." +
-                "Задача состоит в корректном воспроизведении заданной последовательности, используя поле в нижней части формы.\n\nЭтап завершится либо при совершении ошибки при воспроизведении последовательности, " +
-                "либо при корректной записи последовательности длиной в 10 символов.\nНажмите \"Начать\", когда будете готовы.";
-            SetStageVisibility(false, false, false, false, false, true, false, false);
-            testingStage = "третий_тест";
-        }
-
         private void GenerateDigitSequence(int length)
         {
             var rand = new Random();
@@ -775,7 +786,7 @@ namespace VKR2025.ViewModel
 
                 await Task.Delay(3000);
                 EndTitle = "Этап завершен";
-                EndText = "Вы завершили четвертый этап.\nНажмите \"Далее\" для перехода на следующий.";
+                EndText = "Вы завершили третий этап.\nНажмите \"Далее\" для перехода на следующий.";
                 EndButton = "Далее";
                 SetStageVisibility(
                     s1: false,
@@ -789,6 +800,56 @@ namespace VKR2025.ViewModel
             }
 
             _isChecking = true;
+        }
+
+        private void Stage4Begin()
+        {
+            InfoTitle = "Этап 4 из 5.\nТест Бернштейна на запоминание фигур";
+            InfoText = "Эксперимент состоит из запоминания и выбора геометрических фигур.\n\nВам на короткое время будет предъявлено изображение с геометрическими фигурами. " +
+                "Нужно их запомнить. Затем появляется изображение, содержащее большее количество изображений. Нужно выбрать те, которые были предъявлены ранее." +
+                "\nНажмите \"Начать\", когда будете готовы.";
+            SetStageVisibility(false, false, false, false, false, true, false, false);
+            testingStage = "четвертый_тест";
+        }
+
+        public async void GoStage4()
+        {
+            SetStageVisibility(false, false, false, true, false, false, false, false);
+            WarningSize = 80;
+            WarningText = "ВНИМАНИЕ!";
+            WarningVisible = true;
+            await Task.Delay(1000);
+
+            WarningVisible = false;
+            BernsteinImage = true;
+            BernsteinText = "Запомните фигуры, изображенные ниже";
+            BernsteinMatrix = false;
+            InputVisible = false;
+            await Task.Delay(1000);
+
+            BernsteinImage = false;
+            BernsteinText = "Выберите те фигуры, что успели запомнить, и кликните на них";
+            BernsteinMatrix = true;
+            InputVisible = true;
+
+            _trialCompletionSource = new TaskCompletionSource<bool>();
+            await _trialCompletionSource.Task;
+
+            BernsteinImage = false;
+            BernsteinMatrix = false;
+            InputVisible = false;
+            BernsteinText = "";
+            EndTitle = "Этап завершен";
+            EndText = "Вы успешно завершили четвертый этап.\nНажмите \"Далее\" для перехода на следующий.";
+            EndButton = "Далее";
+            SetStageVisibility(
+                s1: false,
+                s2: false, s3: false, s4: false, s5: false,
+                s6: false,
+                s7: false,
+                s8: true  // EndingVisible
+            );
+            testingStage = "пятый_начало";
         }
 
         public void OpenAbout()
@@ -861,5 +922,5 @@ namespace VKR2025.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-} //Эксперимент состоит из двух частей.&#x0a;В каждой части вы увидите серию из 20 кратковременных показов символов.&#x0a;Перед каждым показом на экране появится слово &quot;ВНИМАНИЕ!&quot; - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.&#x0a;&#x0a;Ваша задача - воспроизвести все буквы, которые вы успели увидеть, в любом порядке.&#x0a;&#x0a;Пожалуйста, старайтесь отвечать как можно точнее.&#x0a;Нажмите &quot;Начать&quot;, когда будете готовы.
+} 
 
