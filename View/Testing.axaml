@@ -78,9 +78,9 @@
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Grid.Row="1" Text="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="140" IsVisible="True"/>
-				<TextBlock Grid.Column="0" Grid.Row="4" Text="Введено цифр 3 / 10" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="37" VerticalAlignment="Top" IsVisible="True"/>
-				<TextBox Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="80" HorizontalContentAlignment="Center" Margin="20 10" IsEnabled="True"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding DigitSpan}" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="140" IsVisible="{Binding ShowDigit}"/>
+				<TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding SpanStep}" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="37" VerticalAlignment="Top" IsVisible="{Binding ShowStep}"/>
+				<TextBox Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2" Text="{Binding SpanText}" FontSize="80" HorizontalContentAlignment="Center" Margin="20 10" IsEnabled="{Binding EnableSpanText}"/>
 			</Grid>
 		</ContentControl>
 

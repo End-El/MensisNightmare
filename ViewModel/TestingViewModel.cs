@@ -19,6 +19,7 @@ using System.Data.SqlTypes;
 using System.Collections.ObjectModel;
 using VKR2025.Model;
 using NAudio.Wave;
+using System.Security.Cryptography.X509Certificates;
 
 namespace VKR2025.ViewModel
 {
@@ -266,6 +267,7 @@ namespace VKR2025.ViewModel
             set { _infoText = value; OnPropertyChanged(); }
         }
 
+        //Этап Лурия
         private bool _luriaHear;
         public bool LuriaHear
         {
@@ -294,6 +296,62 @@ namespace VKR2025.ViewModel
             set { _showAudio = value; OnPropertyChanged(); }
         }
 
+        //Этап Диджит Спан
+        private string _spanDigit;
+        public string DigitSpan
+        {
+            get => _spanDigit;
+            set { _spanDigit = value; OnPropertyChanged(); }
+        }
+
+        private bool _showDigit;
+        public bool ShowDigit
+        {
+            get => _showDigit;
+            set { _showDigit = value; OnPropertyChanged(); }
+        }
+
+        private string _spanStep;
+        public string SpanStep
+        {
+            get => _spanStep;
+            set { _spanStep = value; OnPropertyChanged(); }
+        }
+
+        private bool _showStep;
+        public bool ShowStep
+        {
+            get => _showStep;
+            set { _showStep = value; OnPropertyChanged(); }
+        }
+
+        private bool _enableSpanText;
+        public bool EnableSpanText
+        {
+            get => _enableSpanText;
+            set { _enableSpanText = value; OnPropertyChanged(); }
+        }
+
+        private string _spanText;
+        public string SpanText
+        {
+            get => _spanText;
+            set
+            {
+                _spanText = value;
+                OnPropertyChanged();
+
+                SpanStep = $"Введено цифр {_spanText.Length}/{_currentLength}";
+                OnPropertyChanged(nameof(SpanStep));
+
+                // Проверка на полный ввод
+                if (!_isChecking && _spanText.Length == _currentLength)
+                {
+                    _ = CheckInputAsync(); // запуск проверки
+                }
+            }
+        }
+
         public void Next()
         {
             switch (testingStage)
@@ -311,15 +369,15 @@ namespace VKR2025.ViewModel
                 break;
 
                 case "третий_начало":
-                    //инструкция к 3
+                    Stage3Begin();
                 break;
 
                 case "третий_тест":
-                    //переход к 3   
-                break;
+                    GoStage3();
+                    break;
 
                 case "четвертый_начало":
-                    //инструкция к 4
+                    Stage4Begin();
                     break;
 
                 case "четвертый_тест":
@@ -370,7 +428,7 @@ namespace VKR2025.ViewModel
         private async void GoStage1()
         {
             InstructionVisible = false;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++) //<20
             {
                 // Показ "ВНИМАНИЕ!" перед стимулом
                 WarningSize = 80;
@@ -520,7 +578,7 @@ namespace VKR2025.ViewModel
 
         private void Stage2Begin()
         {
-            InfoTitle = "Этап 2 из 5.\nТест на запоминание 10 слов Александра Лурии ";
+            InfoTitle = "Этап 2 из 5.\nТест на запоминание 10 слов Александра Лурии";
             InfoText = "Эксперимент состоит из четырёх частей.\nВ каждой части вам нужно будет прослушать аудиозапись,а затем написать в появившемся окне все слова, которые вы успели запомнить. " +
                 "Слова нужно записывать через пробел, без запятых и других знаков разделения.\n\nПожалуйста, старайтесь отвечать как можно точнее.\nНажмите \"Начать\", когда будете готовы.";
             SetStageVisibility(false, false, false, false, false, true, false, false);
@@ -537,7 +595,7 @@ namespace VKR2025.ViewModel
             List<string> luriaAnswers = new List<string>();
 
             SetStageVisibility(false, true, false, false, false, false, false, false);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++) //<3
             {
                 luriaAnswers.Clear();
                 //отображаем элементы формы для прослушивания аудио записи
@@ -589,6 +647,148 @@ namespace VKR2025.ViewModel
                 s8: true  // EndingVisible
             );
             testingStage = "третий_начало";
+        }
+
+        private void Stage3Begin()
+        {
+            InfoTitle = "Этап 3 из 5.\nТест на диапазон цифр";
+            InfoText = "Эксперимент состоит из запоминания и воспроизведения числовой последовательности.\nВам будет посимвольно представлена числовая последовательность." +
+                "Задача состоит в корректном воспроизведении заданной последовательности, используя поле в нижней части формы.\n\nЭтап завершится либо при совершении ошибки при воспроизведении последовательности, " +
+                "либо при корректной записи последовательности длиной в 10 символов.\nНажмите \"Начать\", когда будете готовы.";
+            SetStageVisibility(false, false, false, false, false, true, false, false);
+            testingStage = "третий_тест";
+        }
+
+        private int _currentLength;
+        private List<int> _digitSequence = new();
+        private bool _isError = false;
+        private bool _isChecking = false;
+        public async void GoStage3()
+        {
+            // Начальные настройки
+            _currentLength = 3;
+            _isError = false;
+
+            SetStageVisibility( //отображаем окно
+                s1: false, s2: false,
+                s3: true, s4: false, s5: false,
+                s6: false, s7: false, s8: false
+            );
+
+            while (!_isError && _currentLength <= 4) //пока нет ошибки или не ввели всё правильно <=10
+            {
+                SpanText = "";
+                GenerateDigitSequence(_currentLength); //создаём цепочку
+
+                ShowDigit = true;
+                EnableSpanText = false;
+                ShowStep = false;
+
+                // Показ цифр по одной
+                foreach (var digit in _digitSequence)
+                {
+                    DigitSpan = digit.ToString();
+
+                    await Task.Delay(800);
+
+                    DigitSpan = "";
+
+                    await Task.Delay(300);
+                }
+
+                // Подготовка к вводу
+                SpanStep = $"Введено цифр 0/{_currentLength}";
+                ShowDigit = false;
+                EnableSpanText = true;
+                ShowStep = true;
+
+                // Ждём завершения ввода (в SpanText setter вызывается CheckInputAsync)
+                _isChecking = false; 
+
+                while (!_isChecking)
+                await Task.Delay(100);
+            }
+
+            //DigitSpan = "Тест завершён";
+            ShowDigit = true;
+            EnableSpanText = false;
+            ShowStep = false;
+        }
+
+        private void Stage4Begin()
+        {
+            InfoTitle = "Этап 4 из 5.\nТест Бернштейна на запоминание фигур";
+            InfoText = "Эксперимент состоит из запоминания и воспроизведения числовой последовательности.\nВам будет посимвольно представлена числовая последовательность." +
+                "Задача состоит в корректном воспроизведении заданной последовательности, используя поле в нижней части формы.\n\nЭтап завершится либо при совершении ошибки при воспроизведении последовательности, " +
+                "либо при корректной записи последовательности длиной в 10 символов.\nНажмите \"Начать\", когда будете готовы.";
+            SetStageVisibility(false, false, false, false, false, true, false, false);
+            testingStage = "третий_тест";
+        }
+
+        private void GenerateDigitSequence(int length)
+        {
+            var rand = new Random();
+            _digitSequence.Clear(); //очищаем
+
+            for (int i = 0; i < length; i++)
+            {
+                _digitSequence.Add(rand.Next(0, 10)); //рандомно заполняем
+            }
+        }
+
+        private async Task CheckInputAsync()
+        {
+            EnableSpanText = false;
+            ShowStep = false;
+
+            string entered = SpanText;
+            string expected = string.Join("", _digitSequence);
+
+            await Task.Delay(500); // пауза перед переходом
+
+            if (entered == expected)
+            {
+                _currentLength++;
+                if (_currentLength > 4) //> 10
+                {
+                    EndTitle = "Этап завершен";
+                    EndText = "Вы успешно завершили третий этап.\nНажмите \"Далее\" для перехода на следующий.";
+                    EndButton = "Далее";
+                    SetStageVisibility(
+                        s1: false,
+                        s2: false, s3: false, s4: false, s5: false,
+                        s6: false,
+                        s7: false,
+                        s8: true  // EndingVisible
+                    );
+                    testingStage = "четвертый_начало";
+                    return;
+                }
+            }
+            else
+            {
+                // Покажем сообщение или ошибку
+                DigitSpan = "Ошибка!";
+                ShowDigit = true;
+                OnPropertyChanged(nameof(DigitSpan));
+                _isError = true;
+
+                await Task.Delay(3000);
+                EndTitle = "Этап завершен";
+                EndText = "Вы завершили четвертый этап.\nНажмите \"Далее\" для перехода на следующий.";
+                EndButton = "Далее";
+                SetStageVisibility(
+                    s1: false,
+                    s2: false, s3: false, s4: false, s5: false,
+                    s6: false,
+                    s7: false,
+                    s8: true  // EndingVisible
+                );
+                testingStage = "четвертый_начало";
+                return;
+            }
+
+            _isChecking = true;
         }
 
         public void OpenAbout()
