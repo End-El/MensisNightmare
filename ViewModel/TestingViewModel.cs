@@ -415,14 +415,19 @@ namespace VKR2025.ViewModel
                 break;
 
                 case "тестирование":
-                    Res1 = result.Stage1Result; // или вычисленное значение
-                    Res2 = result.Stage2Result;
-                    Res3 = result.Stage3Result;
-                    Res4 = result.Stage4Result;
-                    Res5 = result.Stage5Result;
-
+                    SetStageVisibility(s1: false, s2: false, s3: false, s4: false, s5: false, s6: false, s7: false, s8: false);
+                    Res1 = "Средняя точность: " + result.Stage1Result.ToString() + "%"; //Тахистоскоп
+                    Res2 = "Запомнено слов: " + result.Stage2Result.ToString() + " из 10"; //Лурия
+                    Res3 = "Воспроизведено цифр: " + result.Stage3Result.ToString() + " из 10"; //Диджит спан
+                    Res4 = "Узнано фигур: " + result.Stage4Result.ToString() + " из 6"; //Бернштейн
+                    Res5 = "Средняя точность: " + result.Stage5Result.ToString() + "%"; //Матрица
+                    result.SetTotal();
+                    ResTotal = "Общий результат " + result.TotalResult.ToString() + "%"; //общий балл
+                    result.SetDescription();
+                    ResDescription = result.Description; //описание
                     // Вызов окна:
                     OpenResults();
+                    //SaveResultsToDatabase(); //сохранение в базу
                 break;
             }
         }
@@ -802,7 +807,7 @@ namespace VKR2025.ViewModel
                     s7: false,
                     s8: true  // EndingVisible
                 );
-                result.Stage3Result = _currentLength;
+                result.Stage3Result = _currentLength - 1;
                 testingStage = "четвертый_начало";
                 return;
             }
@@ -833,7 +838,7 @@ namespace VKR2025.ViewModel
             BernsteinText = "Запомните фигуры, изображенные ниже";
             BernsteinMatrix = false;
             InputVisible = false;
-            await Task.Delay(1000);
+            await Task.Delay(1500);
 
             BernsteinImage = false;
             BernsteinText = "Выберите те фигуры, что успели запомнить, и кликните на них";
@@ -962,43 +967,43 @@ namespace VKR2025.ViewModel
         //    }
         //}
 
-        private int _res1;
-        public int Res1
+        private string _res1;
+        public string Res1
         {
             get => _res1;
             set { _res1 = value; OnPropertyChanged(); }
         }
 
-        private int _res2;
-        public int Res2
+        private string _res2;
+        public string Res2
         {
             get => _res2;
             set { _res2 = value; OnPropertyChanged(); }
         }
 
-        private int _res3;
-        public int Res3
+        private string _res3;
+        public string Res3
         {
             get => _res3;
             set { _res3 = value; OnPropertyChanged(); }
         }
 
-        private int _res4;
-        public int Res4
+        private string _res4;
+        public string Res4
         {
             get => _res4;
             set { _res4 = value; OnPropertyChanged(); }
         }
 
-        private int _res5;
-        public int Res5
+        private string _res5;
+        public string Res5
         {
             get => _res5;
             set { _res5 = value; OnPropertyChanged(); }
         }
 
-        private int _resTotal;
-        public int ResTotal
+        private string _resTotal;
+        public string ResTotal
         {
             get => _resTotal;
             set { _resTotal = value; OnPropertyChanged(); }
@@ -1035,6 +1040,29 @@ namespace VKR2025.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void SaveResultsToDatabase()
+        {
+            using var db = new AppDbContext(); // или через DI, если используешь
+
+            var entry = new VkrResultsEntry
+            {
+                Name = Name,
+                Age =  int.Parse(Age),
+
+                Stage1Result = result.Stage1Result,
+                Stage2Result = result.Stage2Result,
+                Stage3Result = result.Stage3Result,
+                Stage4Result = result.Stage4Result,
+                Stage5Result = result.Stage5Result,
+
+                TotalResult = double.Parse(ResTotal),
+                Description = ResDescription
+            };
+
+            db.Results.Add(entry);
+            db.SaveChanges();
         }
     }
 } 
