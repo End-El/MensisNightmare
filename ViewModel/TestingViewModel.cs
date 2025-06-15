@@ -25,6 +25,7 @@ namespace VKR2025.ViewModel
 {
     public class TestingViewModel : INotifyPropertyChanged
     {
+        ResultModel result = new ResultModel();
         private Testing? _testingWindow;
         private string testingStage;
 
@@ -414,7 +415,14 @@ namespace VKR2025.ViewModel
                 break;
 
                 case "тестирование":
-                    //показ результатов
+                    Res1 = result.Stage1Result; // или вычисленное значение
+                    Res2 = result.Stage2Result;
+                    Res3 = result.Stage3Result;
+                    Res4 = result.Stage4Result;
+                    Res5 = result.Stage5Result;
+
+                    // Вызов окна:
+                    OpenResults();
                 break;
             }
         }
@@ -448,7 +456,6 @@ namespace VKR2025.ViewModel
 
         private async void GoStage1()
         {
-            ResultModel resultModel = new ResultModel();
             InstructionVisible = false;
             for (int i = 0; i < 2; i++) //<20
             {
@@ -495,7 +502,7 @@ namespace VKR2025.ViewModel
                         correct++;
                     }
                 }
-                resultModel.AddScore(correct);
+                result.AddScore(correct);
 
                 InputVisible = false;
 
@@ -512,7 +519,7 @@ namespace VKR2025.ViewModel
 
                 await Task.Delay(300); // небольшая пауза перед следующей итерацией
             }
-            resultModel.AverageScore();
+            result.AverageScore();
             // Всё! Показ финальной надписи
             EndTitle = "Этап завершен";
             EndText = "Вы успешно завершили первый этап.\nНажмите \"Далее\" для перехода на следующий.";
@@ -644,8 +651,7 @@ namespace VKR2025.ViewModel
                 int luriaResults = luriaAnswers.Intersect(luriaWords, StringComparer.OrdinalIgnoreCase).Count();
 
                 //забиваем в модель
-                ResultModel resultModel = new ResultModel();
-                resultModel.LuriaScore(luriaResults);
+                result.LuriaScore(luriaResults);
             }
             luriaAnswers.Clear();
             //отображаем элементы формы для прослушивания аудио записи
@@ -757,7 +763,6 @@ namespace VKR2025.ViewModel
 
             await Task.Delay(500); // пауза перед переходом
 
-            ResultModel model = new ResultModel();
             if (entered == expected)
             {
                 _currentLength++;
@@ -773,7 +778,7 @@ namespace VKR2025.ViewModel
                         s7: false,
                         s8: true  // EndingVisible
                     );
-                    model.Stage3Result = _currentLength;
+                    result.Stage3Result = _currentLength;
                     testingStage = "четвертый_начало";
                     return;
                 }
@@ -797,7 +802,7 @@ namespace VKR2025.ViewModel
                     s7: false,
                     s8: true  // EndingVisible
                 );
-                model.Stage3Result = _currentLength;
+                result.Stage3Result = _currentLength;
                 testingStage = "четвертый_начало";
                 return;
             }
@@ -838,7 +843,7 @@ namespace VKR2025.ViewModel
             _trialCompletionSource = new TaskCompletionSource<bool>();
             await _trialCompletionSource.Task;
 
-            ResultModel result = new ResultModel();
+            
             result.Stage4Result = Check1 + Check2 + Check3 + Check4 + Check5 + Check6;
 
             BernsteinImage = false;
@@ -918,8 +923,11 @@ namespace VKR2025.ViewModel
         }
         public void OpenResults()
         {
-            var res = new Results();
-            res.Show();
+            var resultsWindow = new Results(this)
+            {
+                //DataContext = this // передаём текущую ViewModel
+            };
+            resultsWindow.Show();
         }
 
         public void CloseAbout()
@@ -953,6 +961,55 @@ namespace VKR2025.ViewModel
 
         //    }
         //}
+
+        private int _res1;
+        public int Res1
+        {
+            get => _res1;
+            set { _res1 = value; OnPropertyChanged(); }
+        }
+
+        private int _res2;
+        public int Res2
+        {
+            get => _res2;
+            set { _res2 = value; OnPropertyChanged(); }
+        }
+
+        private int _res3;
+        public int Res3
+        {
+            get => _res3;
+            set { _res3 = value; OnPropertyChanged(); }
+        }
+
+        private int _res4;
+        public int Res4
+        {
+            get => _res4;
+            set { _res4 = value; OnPropertyChanged(); }
+        }
+
+        private int _res5;
+        public int Res5
+        {
+            get => _res5;
+            set { _res5 = value; OnPropertyChanged(); }
+        }
+
+        private int _resTotal;
+        public int ResTotal
+        {
+            get => _resTotal;
+            set { _resTotal = value; OnPropertyChanged(); }
+        }
+
+        private string _resDescription;
+        public string ResDescription
+        {
+            get => _resDescription;
+            set { _resDescription = value; OnPropertyChanged(); }
+        }
 
         // Добавьте класс RelayCommand, если его еще нет
         public class RelayCommand : ICommand

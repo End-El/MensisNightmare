@@ -7,11 +7,21 @@ namespace VKR2025;
 
 public partial class Results : Window
 {
-    public Results()
+    //public Results()
+    //{
+    //    InitializeComponent();
+    //    var viewmodel = new TestingViewModel();
+    //    viewmodel.CloseResultsAction = () => this.Close();
+    //    DataContext = viewmodel;
+    //}
+    public Results(TestingViewModel viewmodel)
     {
         InitializeComponent();
-        var viewmodel = new TestingViewModel();
-        viewmodel.CloseResultsAction = () => this.Close();
+        viewmodel.CloseResultsAction = () => this.Close(); // назначаем делегат
         DataContext = viewmodel;
+    }
+
+    public Results() : this(new TestingViewModel())
+    {
     }
 }
