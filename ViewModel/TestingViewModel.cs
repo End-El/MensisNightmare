@@ -757,6 +757,7 @@ namespace VKR2025.ViewModel
 
             await Task.Delay(500); // пауза перед переходом
 
+            ResultModel model = new ResultModel();
             if (entered == expected)
             {
                 _currentLength++;
@@ -772,6 +773,7 @@ namespace VKR2025.ViewModel
                         s7: false,
                         s8: true  // EndingVisible
                     );
+                    model.Stage3Result = _currentLength;
                     testingStage = "четвертый_начало";
                     return;
                 }
@@ -795,6 +797,7 @@ namespace VKR2025.ViewModel
                     s7: false,
                     s8: true  // EndingVisible
                 );
+                model.Stage3Result = _currentLength;
                 testingStage = "четвертый_начало";
                 return;
             }
@@ -835,6 +838,9 @@ namespace VKR2025.ViewModel
             _trialCompletionSource = new TaskCompletionSource<bool>();
             await _trialCompletionSource.Task;
 
+            ResultModel result = new ResultModel();
+            result.Stage4Result = Check1 + Check2 + Check3 + Check4 + Check5 + Check6;
+
             BernsteinImage = false;
             BernsteinMatrix = false;
             InputVisible = false;
@@ -850,6 +856,43 @@ namespace VKR2025.ViewModel
                 s8: true  // EndingVisible
             );
             testingStage = "пятый_начало";
+        }
+
+        private int _check1;
+        public int Check1
+        {
+            get => _check1;
+            set { _check1 = value; OnPropertyChanged(); }
+        }
+        private int _check2;
+        public int Check2
+        {
+            get => _check2;
+            set { _check2 = value; OnPropertyChanged(); }
+        }
+        private int _check3;
+        public int Check3
+        {
+            get => _check3;
+            set { _check3 = value; OnPropertyChanged(); }
+        }
+        private int _check4;
+        public int Check4
+        {
+            get => _check4;
+            set { _check4 = value; OnPropertyChanged(); }
+        }
+        private int _check5;
+        public int Check5
+        {
+            get => _check5;
+            set { _check5 = value; OnPropertyChanged(); }
+        }
+        private int _check6;
+        public int Check6
+        {
+            get => _check6;
+            set { _check6 = value; OnPropertyChanged(); }
         }
 
         public void OpenAbout()

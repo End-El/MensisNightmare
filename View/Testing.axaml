@@ -130,8 +130,8 @@
 					<Border BorderBrush="Gray" BorderThickness="1,0,0,0" Grid.Column="3" Grid.RowSpan="5" />
 					<Border BorderBrush="Gray" BorderThickness="1,0,0,0" Grid.Column="4" Grid.RowSpan="5" />
 					<Border BorderBrush="Gray" BorderThickness="0,0,2,0" Grid.Column="5" Grid.RowSpan="5" />
-					<ToggleButton Grid.Column="0" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/00.JPG" Stretch="Uniform"/></ToggleButton>
-					<ToggleButton Grid.Column="0" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/01.JPG" Stretch="Uniform" /></ToggleButton>
+					<ToggleButton Grid.Column="0" Grid.Row="0" Width="102" Height="56" Background="Transparent" IsChecked="{Binding Check1}" BorderThickness="0"><Image Source="avares://VKR2025/Assets/00.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="0" Grid.Row="1" Width="102" Height="56" Background="Transparent" IsChecked="{Binding Check2}" BorderThickness="0"><Image Source="avares://VKR2025/Assets/01.JPG" Stretch="Uniform" /></ToggleButton>
 					<ToggleButton Grid.Column="0" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/02.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="0" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/03.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="0" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/04.JPG" Stretch="Uniform"/></ToggleButton>
@@ -140,11 +140,11 @@
 					<ToggleButton Grid.Column="1" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/12.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="1" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/13.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="1" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/14.JPG" Stretch="Uniform"/></ToggleButton>
-					<ToggleButton Grid.Column="2" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/20.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="0" Width="102" Height="56" Background="Transparent" IsChecked="{Binding Check3}" BorderThickness="0"><Image Source="avares://VKR2025/Assets/20.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="2" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/21.JPG" Stretch="Uniform" /></ToggleButton>
-					<ToggleButton Grid.Column="2" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/22.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="2" Width="102" Height="56" Background="Transparent" IsChecked="{Binding Check4}" BorderThickness="0"><Image Source="avares://VKR2025/Assets/22.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="2" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/23.JPG" Stretch="Uniform"/></ToggleButton>
-					<ToggleButton Grid.Column="2" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/24.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="2" Grid.Row="4" Width="102" Height="56" Background="Transparent" IsChecked="{Binding Check5}" BorderThickness="0"><Image Source="avares://VKR2025/Assets/24.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="3" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/30.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="3" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/31.JPG" Stretch="Uniform" /></ToggleButton>
 					<ToggleButton Grid.Column="3" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/32.JPG" Stretch="Uniform"/></ToggleButton>
@@ -152,7 +152,7 @@
 					<ToggleButton Grid.Column="3" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/34.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="4" Grid.Row="0" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/40.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="4" Grid.Row="1" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/41.JPG" Stretch="Uniform" /></ToggleButton>
-					<ToggleButton Grid.Column="4" Grid.Row="2" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/42.JPG" Stretch="Uniform"/></ToggleButton>
+					<ToggleButton Grid.Column="4" Grid.Row="2" Width="102" Height="56" Background="Transparent" IsChecked="{Binding Check6}" BorderThickness="0"><Image Source="avares://VKR2025/Assets/42.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="4" Grid.Row="3" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/43.JPG" Stretch="Uniform"/></ToggleButton>
 					<ToggleButton Grid.Column="4" Grid.Row="4" Width="102" Height="56" Background="Transparent" BorderThickness="0"><Image Source="avares://VKR2025/Assets/44.JPG" Stretch="Uniform"/></ToggleButton>
 				</Grid>

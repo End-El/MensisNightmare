@@ -8,17 +8,21 @@ namespace VKR2025.Model
 {
     public class ResultModel
     {
-        public int Stage1Result { get; set; } = 0;
+        public int Stage1Result { get; set; } = 0; //Тахистоскоп
         public void AddScore(int score)
         {
             Stage1Result += score;
         }
 
-        public int Stage2Result { get; set; } = 0;
+        public int Stage2Result { get; set; } = 0; //Лурия
         public void LuriaScore(int score)
         {
             if (score > Stage2Result) 
                 Stage2Result = score;
         }
+
+        public int Stage3Result { get; set; } = 0; //Диапазон цифр
+        public int Stage4Result { get; set; } = 0; //Бернштейн
+        public int Stage5Result { get; set; } = 0; //Матрица
     }
 }
