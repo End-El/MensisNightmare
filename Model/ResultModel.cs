@@ -50,13 +50,13 @@ namespace VKR2025.Model
         public int Stage5Result { get; set; } = 0; //Матрица
         public double TotalResult { get; set; }
         public string Description { get; set; }
-        public int Id { get; set; }
+        public int id { get; set; }
 
     }
 
     public class AppDbContext : DbContext
     {
-        public DbSet<VkrResultsEntry> Results { get; set; }
+        public DbSet<VkrResultsEntry> VkrResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -66,7 +66,7 @@ namespace VKR2025.Model
 
     public class VkrResultsEntry
     {
-        public int Id { get; set; } // будет автоинкрементироваться
+        public int id { get; set; } // будет автоинкрементироваться
 
         public string Name { get; set; }
         public int Age { get; set; }

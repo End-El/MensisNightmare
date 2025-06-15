@@ -427,7 +427,7 @@ namespace VKR2025.ViewModel
                     ResDescription = result.Description; //описание
                     // Вызов окна:
                     OpenResults();
-                    //SaveResultsToDatabase(); //сохранение в базу
+                    SaveResultsToDatabase(); //сохранение в базу
                 break;
             }
         }
@@ -1057,11 +1057,11 @@ namespace VKR2025.ViewModel
                 Stage4Result = result.Stage4Result,
                 Stage5Result = result.Stage5Result,
 
-                TotalResult = double.Parse(ResTotal),
+                TotalResult = result.TotalResult,
                 Description = ResDescription
             };
 
-            db.Results.Add(entry);
+            db.VkrResults.Add(entry);
             db.SaveChanges();
         }
     }
