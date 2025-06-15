@@ -928,6 +928,7 @@ namespace VKR2025.ViewModel
         }
         public void OpenResults()
         {
+            LoadLatestResultFromDatabase();
             var resultsWindow = new Results(this)
             {
                 //DataContext = this // передаём текущую ViewModel
@@ -1036,10 +1037,40 @@ namespace VKR2025.ViewModel
             }
         }
 
+        public string Stage1Result { get; set; }
+        public string Stage2Result { get; set; }
+        public string Stage3Result { get; set; }
+        public string Stage4Result { get; set; }
+        public string Stage5Result { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void LoadLatestResultFromDatabase()
+        {
+            using var db = new AppDbContext();
+
+            var latestResult = db.VkrResults
+                .OrderByDescending(r => r.id) // последний по Id
+                .FirstOrDefault();
+
+            if (latestResult != null)
+            {
+                Name = latestResult.Name;
+                Age = latestResult.Age.ToString();
+
+                Res1 = "Средняя точность: "+latestResult.Stage1Result.ToString("F0")+"%";
+                Res2 = "Запомнено слов: "+latestResult.Stage2Result.ToString("F0")+" из 10";
+                Res3 = "Воспроизведено цифр: "+latestResult.Stage3Result.ToString("F0")+" из 10";
+                Res4 = "Узнано фигур: "+latestResult.Stage4Result.ToString("F0")+" из 6";
+                Res5 = "Средняя точность: "+latestResult.Stage5Result.ToString("F0")+"%";
+
+                ResTotal = "Общий результат "+latestResult.TotalResult.ToString("F0")+"%";
+                ResDescription = latestResult.Description;
+            }
         }
 
         public void SaveResultsToDatabase()
