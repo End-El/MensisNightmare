@@ -13,5 +13,12 @@ namespace VKR2025.Model
         {
             Stage1Result += score;
         }
+
+        public int Stage2Result { get; set; } = 0;
+        public void LuriaScore(int score)
+        {
+            if (score > Stage2Result) 
+                Stage2Result = score;
+        }
     }
 }

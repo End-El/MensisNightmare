@@ -26,8 +26,7 @@
 		</Grid.ColumnDefinitions>
 
 		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage1" IsVisible="{Binding Stage1Visible}">
-			<!--{Binding Stage1Visible}-->
-			<!--Контейнер 1 этапа-->
+			<!--Контейнер 1 этапа, тахистоскоп-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
 					<RowDefinition/>
@@ -64,7 +63,7 @@
 		</ContentControl>
 
 		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage3" IsVisible="{Binding Stage3Visible}">
-			<!--Контейнер 2 этапа-->
+			<!--Контейнер 3 этапа, Диджит спан-->
 			<Grid ShowGridLines="False">
 				<Grid.RowDefinitions>
 					<RowDefinition/>
@@ -86,7 +85,7 @@
 		</ContentControl>
 
 		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage4" IsVisible="{Binding Stage4Visible}">
-			<!--Контейнер 3 этапа-->
+			<!--Контейнер 4 этапа, Бернштейн-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
 					<RowDefinition/>
@@ -107,7 +106,7 @@
 		</ContentControl>
 
 		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage2" IsVisible="{Binding Stage2Visible}">
-			<!--Контейнер 4 этапа-->
+			<!--Контейнер 2 этапа, Лурия-->
 			<Grid ShowGridLines="false">
 				<Grid.RowDefinitions>
 					<RowDefinition/>
@@ -122,8 +121,8 @@
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Прослушайте запись" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 100 0" FontSize="25"/>
-				<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="100 0 0 0" Background="Transparent">
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Прослушайте запись" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 100 0" FontSize="25" IsVisible="{Binding LuriaHear}"/>
+				<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="100 0 0 0" Background="Transparent" IsVisible="{Binding LuriaHear}" Command="{Binding PlayAudioCommand}" IsEnabled="{Binding ShowAudio}">
 					<Button.Styles>
 						<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 							<Setter Property="Background" Value="Transparent"/>
@@ -134,14 +133,14 @@
 					</Button.Styles>
 					<Image Source="C:\Sharp\VKR2025\Assets\speaker-filled-audio-tool.png"/>
 				</Button>
-				<TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="Запишите все запомнившиеся слова, затем нажмите &quot;Далее&quot;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="24"/>
-				<TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="25" TextWrapping="Wrap" MaxLines="3" BorderThickness="3"/>
-				<Button Grid.Row="8" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Center" Content="Далее" HorizontalContentAlignment="Center" FontSize="20" Background="#0067a5" Foreground="White"/>
+				<TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="Запишите все запомнившиеся слова, затем нажмите &quot;Далее&quot;" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="24" IsVisible="{Binding LuriaWrite}"/>
+				<TextBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="25" TextWrapping="Wrap" MaxLines="3" BorderThickness="3" IsVisible="{Binding LuriaWrite}" Text="{Binding LuriaWords}"/>
+				<Button Grid.Row="8" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Center" Content="Далее" HorizontalContentAlignment="Center" FontSize="20" Background="#0067a5" Foreground="White" IsVisible="{Binding LuriaWrite}" Command="{Binding ConfirmCommand}"/>
 			</Grid>
 		</ContentControl>
 
 		<ContentControl Grid.Column="2" Grid.Row="2" Name="Stage5" IsVisible="{Binding Stage5Visible}">
-			<!--Контейнер 5 этапа-->
+			<!--Контейнер 5 этапа, матрица-->
 			<Grid ShowGridLines="False">
 				<Grid.RowDefinitions>
 					<RowDefinition/>
@@ -211,8 +210,8 @@
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Этап 1 из 5.&#x0a;Тахистоскопический тест" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
-				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="Эксперимент состоит из двух частей.&#x0a;В каждой части вы увидите серию из 20 кратковременных показов символов.&#x0a;Перед каждым показом на экране появится слово &quot;ВНИМАНИЕ!&quot; - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.&#x0a;&#x0a;Ваша задача - воспроизвести все буквы, которые вы успели увидеть, в любом порядке.&#x0a;&#x0a;Пожалуйста, старайтесь отвечать как можно точнее.&#x0a;Нажмите &quot;Начать&quot;, когда будете готовы." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding InfoTitle}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="{Binding InfoText}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 				<Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300" Height="40" VerticalAlignment="Bottom" Content="Начать" HorizontalContentAlignment="Center" FontSize="20" Margin="0 0 0 12" Background="#0067a5" Foreground="White" Command="{Binding GoTestingCommand}"/>
 			</Grid>
 		</ContentControl>
@@ -235,7 +234,7 @@
 				</Grid.ColumnDefinitions>
 				<TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding EndTitle}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextAlignment="Center" FontWeight="Bold"/>
 				<TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" TextWrapping="Wrap" Text="{Binding EndText}" FontSize="26" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
-				<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="360" Height="50" VerticalAlignment="Top" Content="{Binding EndButton}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Background="#0067a5" Foreground="White" Command="{Binding NextCommand}"/>
+				<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="360" Height="50" VerticalAlignment="Top" Content="{Binding EndButton}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Background="#0067a5" Foreground="White" Command="{Binding GoTestingCommand}"/>
 			</Grid>
 		</ContentControl>
 

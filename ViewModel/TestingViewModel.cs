@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -17,12 +18,14 @@ using MsBox.Avalonia;
 using System.Data.SqlTypes;
 using System.Collections.ObjectModel;
 using VKR2025.Model;
+using NAudio.Wave;
 
 namespace VKR2025.ViewModel
 {
     public class TestingViewModel : INotifyPropertyChanged
     {
         private Testing? _testingWindow;
+        private string testingStage;
 
         private bool _stage1Visible;
         public bool Stage1Visible
@@ -142,7 +145,8 @@ namespace VKR2025.ViewModel
         public ICommand OpenResultsCommand { get; }
         public ICommand GoTestingCommand { get; }
         public ICommand ConfirmCommand { get; }
-        public ICommand NextCommand { get; }
+        public ICommand PlayAudioCommand { get; }
+        //public ICommand CollectWordsCommand { get; }
         public Action? CloseMainWindowAction { get; set; }
         public Action? CloseAboutAction { get; set; }
         public Action? CloseResultsAction { get; set; }
@@ -155,10 +159,11 @@ namespace VKR2025.ViewModel
             OpenTestingCommand = new RelayCommand(OpenTesting);
             OpenAboutCommand = new RelayCommand(OpenAbout);
             OpenResultsCommand = new RelayCommand(OpenResults);
-            GoTestingCommand = new RelayCommand(GoStage1);
+            GoTestingCommand = new RelayCommand(Next);
             ConfirmCommand = new RelayCommand(Confirm);
-            NextCommand = new RelayCommand(Next);
-        }
+            PlayAudioCommand = new RelayCommand(PlayAudio);
+            //CollectWordsCommand = new RelayCommand(CollectWords);
+        } 
 
         private void GenerateInitialCollections()
         {
@@ -247,25 +252,85 @@ namespace VKR2025.ViewModel
             set { _endButton = value; OnPropertyChanged(); }
         }
 
+        private string _infoTitle;
+        public string InfoTitle
+        {
+            get => _infoTitle;
+            set { _infoTitle = value; OnPropertyChanged(); }
+        }
+
+        private string _infoText;
+        public string InfoText
+        {
+            get => _infoText;
+            set { _infoText = value; OnPropertyChanged(); }
+        }
+
+        private bool _luriaHear;
+        public bool LuriaHear
+        {
+            get => _luriaHear;
+            set { _luriaHear = value; OnPropertyChanged(); }
+        }
+
+        private bool _luriaWrite;
+        public bool LuriaWrite
+        {
+            get => _luriaWrite;
+            set { _luriaWrite = value; OnPropertyChanged(); }
+        }
+
+        private string _luriaWords;
+        public string LuriaWords
+        {
+            get => _luriaWords;
+            set { _luriaWords = value; OnPropertyChanged(); }
+        }
+
+        private bool _showAudio;
+        public bool ShowAudio
+        {
+            get => _showAudio;
+            set { _showAudio = value; OnPropertyChanged(); }
+        }
+
         public void Next()
         {
-            var parts = EndText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var word = parts[3].ToLower();
-            switch (word)
+            switch (testingStage)
             {
-                case "первый":
-                    //переход ко 2
+                case "первый_начало":
+                    GoStage1();
                 break;
 
-                case "второй":
-                    //переход к 3
+                case "второй_начало":
+                    Stage2Begin();
                 break;
 
-                case "третий":
-                    //переход к 4    
+                case "второй_тест":
+                    GoStage2();
                 break;
 
-                case "четвертый":
+                case "третий_начало":
+                    //инструкция к 3
+                break;
+
+                case "третий_тест":
+                    //переход к 3   
+                break;
+
+                case "четвертый_начало":
+                    //инструкция к 4
+                    break;
+
+                case "четвертый_тест":
+                    //переход к 4
+                break;
+
+                case "пятый_начало":
+                    //инструкция к 5
+                    break;
+
+                case "пятый_тест":
                     //переход к 5
                 break;
 
@@ -278,11 +343,18 @@ namespace VKR2025.ViewModel
         private void GenerateStimuli() //генерация стимулов
         {
             //Stimuli.Clear();
+            char[] allowable = new[] //Алфавит без Ь, Ъ и Ё
+            {
+                'А','Б','В','Г','Д','Е','Ж','З','И','Й',
+                'К','Л','М','Н','О','П','Р','С','Т','У',
+                'Ф','Х','Ц','Ч','Ш','Щ','Э','Ю','Я'
+            };
             var rand = new Random();
 
             for (int i = 0; i < 8; i++)
             {
-                Stimuli[i] = ((char)rand.Next('А', 'Я' + 1));
+                //Stimuli[i] = ((char)rand.Next('А', 'Я' + 1));
+                Stimuli[i] = allowable[rand.Next(allowable.Length)];
             }
         }
 
@@ -295,7 +367,7 @@ namespace VKR2025.ViewModel
             }
         }
 
-        public async void GoStage1()
+        private async void GoStage1()
         {
             InstructionVisible = false;
             for (int i = 0; i < 4; i++)
@@ -373,6 +445,7 @@ namespace VKR2025.ViewModel
                 s7: false,
                 s8: true  // EndingVisible
             );
+            testingStage = "второй_начало";
 
         }
 
@@ -397,22 +470,125 @@ namespace VKR2025.ViewModel
 
         public Func<Window?>? GetOwnerWindow { get; set; }
         public void OpenTesting()
-        {
-            if (Age > 0 && !string.IsNullOrWhiteSpace(Name))
+        {            
+            if (int.TryParse(Age, out int ageValue) && ageValue > 0 && !string.IsNullOrWhiteSpace(Name))
             {
                 _testingWindow = new Testing();
                 _testingWindow.DataContext = this;
                 _testingWindow?.Show();
                 CloseRegistryAction?.Invoke();
+
+                //EndText = "Вы успешно завершили нулевой этап";
+                InfoTitle = "Этап 1 из 5.\nТахистоскопический тест";
+                InfoText = "Вы увидите серию из 20 кратковременных показов символов.\nПеред каждым показом на экране появится слово \"ВНИМАНИЕ!\"" +
+                    " - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.\n\nВаша задача - воспроизвести все буквы, которые вы успели увидеть, " +
+                    "в любом порядке.\n\nПожалуйста, старайтесь отвечать как можно точнее.\nНажмите \"Начать\", когда будете готовы.";
                 SetStageVisibility(false, false, false, false, false, true, false, false);
+                testingStage = "первый_начало";
             }
             else
             {
                 var ownerWindow = GetOwnerWindow?.Invoke();
-                var box = MessageBoxManager.GetMessageBoxStandard("Ошибка", "Пожалуйста, заполните все поля.", ButtonEnum.Ok);
+                var box = MessageBoxManager.GetMessageBoxStandard("Ошибка", "Пожалуйста, проверьте корректность заполнения полей.", ButtonEnum.Ok);
                 box.ShowWindowDialogAsync(ownerWindow); //  показываем на текущем окне
                 return;
             }
+        }
+
+        public void PlayAudio()
+        {
+            ShowAudio = false;
+            var audioFile = new AudioFileReader(Path.Combine(AppContext.BaseDirectory, "Assets", "Luria.mp3"));
+            var outputDevice = new WaveOutEvent();
+
+            outputDevice.Init(audioFile);
+            outputDevice.Play();
+
+            // Обязательно выгружаем после проигрывания
+            outputDevice.PlaybackStopped += (s, e) =>
+            {
+                outputDevice.Dispose();
+                audioFile.Dispose();
+                Confirm();
+            };
+        }
+
+        //public void CollectWords()
+        //{
+
+        //}
+
+        private void Stage2Begin()
+        {
+            InfoTitle = "Этап 2 из 5.\nТест на запоминание 10 слов Александра Лурии ";
+            InfoText = "Эксперимент состоит из четырёх частей.\nВ каждой части вам нужно будет прослушать аудиозапись,а затем написать в появившемся окне все слова, которые вы успели запомнить. " +
+                "Слова нужно записывать через пробел, без запятых и других знаков разделения.\n\nПожалуйста, старайтесь отвечать как можно точнее.\nНажмите \"Начать\", когда будете готовы.";
+            SetStageVisibility(false, false, false, false, false, true, false, false);
+            testingStage = "второй_тест";
+        }
+
+        public async void GoStage2()
+        {
+            IReadOnlyList<string> luriaWords = new List<string>()
+            { 
+                "лес", "хлеб", "парашют", "океан", "пантограф",
+                "брат", "скорость", "разность", "орхидея", "концерт"
+            };
+            List<string> luriaAnswers = new List<string>();
+
+            SetStageVisibility(false, true, false, false, false, false, false, false);
+            for (int i = 0; i < 3; i++)
+            {
+                luriaAnswers.Clear();
+                //отображаем элементы формы для прослушивания аудио записи
+                ShowAudio = true;
+                LuriaHear = true;
+                LuriaWrite = false;
+
+                //ждём, пока аудио запись проиграется (на кнопке сначала играет аудио, потом идёт подтверждение _trialCompletionSource)
+                _trialCompletionSource = new TaskCompletionSource<bool>();
+                await _trialCompletionSource.Task;
+
+                //отображаем элементы формы для записи слов
+                LuriaWords = "";
+                LuriaHear = false;
+                LuriaWrite = true;
+
+                //ждём, пока пользователь введёт слова и нажмёт на кнопку
+                _trialCompletionSource = new TaskCompletionSource<bool>();
+                await _trialCompletionSource.Task;
+
+                //собираем введенные слова в luriaAnswers
+                luriaAnswers = LuriaWords.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                
+                //сравниваем, скок правильно
+                int luriaResults = luriaAnswers.Intersect(luriaWords, StringComparer.OrdinalIgnoreCase).Count();
+
+                //забиваем в модель
+                ResultModel resultModel = new ResultModel();
+                resultModel.LuriaScore(luriaResults);
+            }
+            luriaAnswers.Clear();
+            //отображаем элементы формы для прослушивания аудио записи
+            ShowAudio = true;
+            LuriaHear = true;
+            LuriaWrite = false;
+
+            //ждём, пока аудио запись проиграется (на кнопке сначала играет аудио, потом идёт подтверждение _trialCompletionSource)
+            _trialCompletionSource = new TaskCompletionSource<bool>();
+            await _trialCompletionSource.Task;
+
+            EndTitle = "Этап завершен";
+            EndText = "Вы успешно завершили второй этап.\nНажмите \"Далее\" для перехода на следующий.";
+            EndButton = "Далее";
+            SetStageVisibility(
+                s1: false,
+                s2: false, s3: false, s4: false, s5: false,
+                s6: false,
+                s7: false,
+                s8: true  // EndingVisible
+            );
+            testingStage = "третий_начало";
         }
 
         public void OpenAbout()
@@ -444,20 +620,20 @@ namespace VKR2025.ViewModel
             set { _name = value; OnPropertyChanged("Name"); }
         }
 
-        private int _age;
-        public int Age
+        private string _age;
+        public string Age
         {
             get { return _age; }
             set { _age = value; OnPropertyChanged("Age"); }
         }
 
-        private void Do1Stage()
-        {
-            for (int i = 0; i < 19; i++)
-            {
+        //private void Do1Stage()
+        //{
+        //    for (int i = 0; i < 19; i++)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         // Добавьте класс RelayCommand, если его еще нет
         public class RelayCommand : ICommand
