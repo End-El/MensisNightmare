@@ -20,6 +20,9 @@ using System.Collections.ObjectModel;
 using VKR2025.Model;
 using NAudio.Wave;
 using System.Security.Cryptography.X509Certificates;
+using Avalonia.Media.Imaging;
+using Avalonia.Threading;
+using Avalonia.Platform;
 
 namespace VKR2025.ViewModel
 {
@@ -462,7 +465,7 @@ namespace VKR2025.ViewModel
         private async void GoStage1()
         {
             InstructionVisible = false;
-            for (int i = 0; i < 2; i++) //<20
+            for (int i = 0; i < 20; i++) //<20
             {
                 // Показ "ВНИМАНИЕ!" перед стимулом
                 WarningSize = 80;
@@ -570,7 +573,7 @@ namespace VKR2025.ViewModel
                 CloseRegistryAction?.Invoke();
 
                 //EndText = "Вы успешно завершили нулевой этап";
-                InfoTitle = "Этап 1 из 4.\nТахистоскопический тест";
+                InfoTitle = "Этап 1 из 5.\nТахистоскопический тест";
                 InfoText = "Вы увидите серию из 20 кратковременных показов символов.\nПеред каждым показом на экране появится слово \"ВНИМАНИЕ!\"" +
                     " - это сигнал о начале попытки. Через 2 секунды после этого на короткое время появятся две строчки с буквами.\n\nВаша задача - воспроизвести все буквы, которые вы успели увидеть, " +
                     "в любом порядке.\n\nПожалуйста, старайтесь отвечать как можно точнее.\nНажмите \"Начать\", когда будете готовы.";
@@ -611,7 +614,7 @@ namespace VKR2025.ViewModel
 
         private void Stage2Begin()
         {
-            InfoTitle = "Этап 2 из 4.\nТест на запоминание 10 слов Александра Лурии";
+            InfoTitle = "Этап 2 из 5.\nТест на запоминание 10 слов Александра Лурии";
             InfoText = "Эксперимент состоит из четырёх частей.\n\nВ каждой части вам нужно будет прослушать аудиозапись,а затем написать в появившемся окне все слова, которые вы успели запомнить. " +
                 "Слова нужно записывать через пробел, без запятых и других знаков разделения.\n\nПожалуйста, старайтесь отвечать как можно точнее.\nНажмите \"Начать\", когда будете готовы.";
             SetStageVisibility(false, false, false, false, false, true, false, false);
@@ -628,7 +631,7 @@ namespace VKR2025.ViewModel
             List<string> luriaAnswers = new List<string>();
 
             SetStageVisibility(false, true, false, false, false, false, false, false);
-            for (int i = 0; i < 1; i++) //<3
+            for (int i = 0; i < 3; i++) //<3
             {
                 luriaAnswers.Clear();
                 //отображаем элементы формы для прослушивания аудио записи
@@ -683,7 +686,7 @@ namespace VKR2025.ViewModel
 
         private void Stage3Begin()
         {
-            InfoTitle = "Этап 3 из 4.\nТест на диапазон цифр";
+            InfoTitle = "Этап 3 из 5.\nТест на диапазон цифр";
             InfoText = "Эксперимент состоит из запоминания и воспроизведения числовой последовательности.\n\nВам будет посимвольно представлена числовая последовательность." +
                 "Задача состоит в корректном воспроизведении заданной последовательности, используя поле в нижней части формы.\n\nЭтап завершится либо при совершении ошибки при воспроизведении последовательности, " +
                 "либо при корректной записи последовательности длиной в 10 символов.\nНажмите \"Начать\", когда будете готовы.";
@@ -707,7 +710,7 @@ namespace VKR2025.ViewModel
                 s6: false, s7: false, s8: false
             );
 
-            while (!_isError && _currentLength <= 4) //пока нет ошибки или не ввели всё правильно <=10
+            while (!_isError && _currentLength <= 10) //пока нет ошибки или не ввели всё правильно <=10
             {
                 SpanText = "";
                 GenerateDigitSequence(_currentLength); //создаём цепочку
@@ -771,7 +774,7 @@ namespace VKR2025.ViewModel
             if (entered == expected)
             {
                 _currentLength++;
-                if (_currentLength > 4) //> 10
+                if (_currentLength > 10) //> 10
                 {
                     EndTitle = "Этап завершен";
                     EndText = "Вы успешно завершили третий этап.\nНажмите \"Далее\" для перехода на следующий.";
@@ -817,7 +820,7 @@ namespace VKR2025.ViewModel
 
         private void Stage4Begin()
         {
-            InfoTitle = "Этап 4 из 4.\nТест Бернштейна на запоминание фигур";
+            InfoTitle = "Этап 4 из 5.\nТест Бернштейна на запоминание фигур";
             InfoText = "Эксперимент состоит из запоминания и выбора геометрических фигур.\n\nВам на короткое время будет предъявлено изображение с геометрическими фигурами. " +
                 "Нужно их запомнить. Затем появляется изображение, содержащее большее количество изображений. Нужно выбрать те, которые были предъявлены ранее." +
                 "\nНажмите \"Начать\", когда будете готовы.";
@@ -855,9 +858,9 @@ namespace VKR2025.ViewModel
             BernsteinMatrix = false;
             InputVisible = false;
             BernsteinText = "";
-            EndTitle = "Тестирование завершено";
-            EndText = "Вы успешно завершили четвертый этап.\nНажмите \"Посмотреть результаты\" для просмотра результатов.";
-            EndButton = "Посмотреть результаты";
+            EndTitle = "Этап завершен";
+            EndText = "Вы успешно завершили четвертый этап.\nНажмите \"Далее\" для перехода на следующий.";
+            EndButton = "Далее";
             SetStageVisibility(
                 s1: false,
                 s2: false, s3: false, s4: false, s5: false,
@@ -865,7 +868,7 @@ namespace VKR2025.ViewModel
                 s7: false,
                 s8: true  // EndingVisible
             );
-            testingStage = "тестирование";
+            testingStage = "пятый_начало";
         }
 
         private void Stage5Begin()
@@ -877,12 +880,87 @@ namespace VKR2025.ViewModel
             SetStageVisibility(false, false, false, false, false, true, false, false);
             testingStage = "пятый_тест";
         }
-
+        public ObservableCollection<string> UserSelections { get; } = new();
         public async void GoStage5()
         {
+            var correctPositions = new List<List<string>>
+            {
+                new() { "41", "22", "04" },      // 3 точки
+                new() { "01", "30", "42", "43", "14" }, // 5 точек
+                new() { "11", "21", "41", "02", "43", "14", "24" }, // 7 точек
+                new() { "00", "10", "11", "21", "22", "20", "43", "14", "34" } // 9 точек
+            };
+
+            // Пути к изображению
+            var imagePaths = new[]
+            {
+                "Assets/marks3.JPG",
+                "Assets/marks5.JPG",
+                "Assets/marks7.JPG",
+                "Assets/marks9.JPG"
+            };
+            for (int i = 0; i < 4; i++)
+            {
+                SetStageVisibility(false, false, false, false, true, false, false, false);
+                WarningSize = 80;
+                WarningText = "ВНИМАНИЕ!";
+                WarningVisible = true;
+                await Task.Delay(1000);
+
+                WarningVisible = false;
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    var uri = new Uri($"avares://VKR2025/{imagePaths[i]}");
+                    using var stream = AssetLoader.Open(uri);
+                    MatrixImage = new Bitmap(stream);
+                });
+                MatrixImageVisible = true;
+                await Task.Delay(1000);
+                MatrixImage = null;
+                MatrixImageVisible = false;
+                UserSelections.Clear(); //очищаем список
+                _testingWindow.ResetToggleButtons(); //очищаем матрицу
+                MatrixVisible = true;
+                _trialCompletionSource = new TaskCompletionSource<bool>();
+                await _trialCompletionSource.Task;
+
+                var correct = correctPositions[i];                         // эталон
+                var user = UserSelections.ToList();                        // выбор пользователя
+                var correctCount = correct.Intersect(user).Count();
+                MatrixVisible = false;
+            }
+            EndTitle = "Тестирование завершено";
+            EndText = "Вы успешно завершили четвертый этап.\nНажмите \"Посмотреть результаты\" для просмотра результатов.";
+            EndButton = "Посмотреть результаты";
+            SetStageVisibility(
+                s1: false,
+                s2: false, s3: false, s4: false, s5: false,
+                s6: false,
+                s7: false,
+                s8: true  // EndingVisible
+            );
+            testingStage = "тестирование";
 
         }
 
+        private bool _matrixVisible;
+        public bool MatrixVisible
+        {
+            get => _matrixVisible;
+            set { _matrixVisible = value; OnPropertyChanged(); }
+        }
+        private bool _matrixImageVisible;
+        public bool MatrixImageVisible
+        {
+            get => _matrixImageVisible;
+            set { _matrixImageVisible = value; OnPropertyChanged(); }
+        }
+        private Bitmap _matrixImage;
+        public Bitmap MatrixImage
+        {
+            get => _matrixImage;
+            set { _matrixImage = value; OnPropertyChanged(); }
+        }
         private int _check1;
         public int Check1
         {
@@ -959,14 +1037,6 @@ namespace VKR2025.ViewModel
             get { return _age; }
             set { _age = value; OnPropertyChanged("Age"); }
         }
-
-        //private void Do1Stage()
-        //{
-        //    for (int i = 0; i < 19; i++)
-        //    {
-
-        //    }
-        //}
 
         private string _res1;
         public string Res1

@@ -16,7 +16,7 @@ namespace VKR2025.Model
         }
         public void AverageScore()
         {
-            Stage1Result = (int)Math.Ceiling(Stage1Result / 16.0 * 100); //переводим в среднюю иточность, в процентах поменять на 160
+            Stage1Result = (int)Math.Ceiling(Stage1Result / 160.0 * 100); //переводим в среднюю иточность, в процентах поменять на 160
         }
 
         public int Stage2Result { get; set; } = 0; //Лурия
